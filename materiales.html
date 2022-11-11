@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Seo -->
+    <meta name="author" content="Sebastian Poleschi">
+    <meta name="description" content="Catálogo de materieales Mondony Muebles, Arte y Diseño, tienda de muebles y objetos de diseño que interpreta necesidades especiales de clientes">
+    <meta name="keyword" content="Mondony, tienda muebles, arte, diseño, muebleria, materiales, catalogo de materiales, muebles de diseño, muebles de calidad, diseño de interiores">
+    <link rel="shortcut icon" href="./Images/favicon.ico" />
+    <title>Materiales Mondony</title>
+
+    <!-- Animate & Fontawesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+    
+    <!--Mi css-->
+    <link rel="stylesheet" href="./css/mainmin.css">
+  </head>
+  
+  <body>
+    <nav class="navbar sticky-top navbar-expand-md navbar-light" id="menunav">
+      <a class="navbar-brand logo" href="./index.html">
+        <p class="logo1">Mondony</p>
+        <p class="logo2">Muebles, arte y diseño</p>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <div class="collapse navbar-collapse wow animate__animated animate__fadeInDown" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="./index.html">Inicio </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./nosotros.html">Nosotros</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="./mueblesBS.html" id="navbarDropdown" role="button"
+              data-toggle="dropdown" aria-expanded="false">
+              Muebles
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="./mueblesBS.html">Muebles Bootstrap</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="./mueblesGrid.html">Muebles Grid & Flex</a>
+            </div>
+          </li>
+          <li class="nav-item active dropdown">
+            <a class="nav-link" href="./materiales.html" id="navbarDropdown" role="button" 
+              data-toggle="dropdown_saco" aria-expanded="false">
+              Materiales <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./contacto.html">Contacto</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container-fluid mt-3">
+      <div class="row">
+        <main class="col-12 col-md-9 col-lg-10 col order-md-2">
+          <div class="galeria container-fluid">
+            <div class="text-center pt-3">
+              <h1 class="titulo mt-1 mb-4 text-uppercase font-weight-bold">
+                Materiales
+              </h1>
+            </div>
+
+            <div class="muebles row justify-content-center">
+              <div class="col-12 col-md-6 col-lg-4 mb-5 text-center">
+                <p class="text-uppercase">Cueros</p>
+                <a href="./materiales.html">
+                  <img src="./images/cueros.webp" alt="Cueros" />
+                </a>
+              </div>
+              <div class="col-12 col-md-6 col-lg-4 mb-5 text-center">
+                <p class="text-uppercase">Telas</p>
+                <a href="./materiales.html">
+                  <img src="./images/telas.webp" alt="Telas" />
+                </a>
+              </div>
+              <div class="col-12 col-md-6 col-lg-4 mb-5 text-center">
+                <p class="text-uppercase">Vidrios y cristales</p>
+                <a href="./materiales.html">
+                  <img src="./images/vidrios.webp" alt="Vidrios y cristales" />
+                </a>
+              </div>
+              <div class="col-12 col-md-6 col-lg-4 mb-5 text-center">
+                <p class="text-uppercase">Mármol</p>
+                <a href="./materiales.html">
+                  <img src="./images/marmol.webp" alt="Mármol" />
+                </a>
+              </div>
+              <div class="col-12 col-md-6 col-lg-4 mb-5 text-center">
+                <p class="text-uppercase">Enchapados</p>
+                <a href="./materiales.html">
+                  <img src="./images/enchapados.webp" alt="Enchapados" />
+                </a>
+              </div>
+              <div class="col-12 col-md-6 col-lg-4 mb-5 text-center">
+                <p class="text-uppercase">Melaminas</p>
+                <a href="./materiales.html">
+                  <img src="./images/melaminas.webp" alt="Melaminas" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </main>
+        
+        <aside class="col-12 col-md-3 col-lg-2 col order-md-1 text-center">
+          <button id="btncollapseMenu" class="btn btn-light  mb-3" type="button" data-toggle="collapse"
+            data-target="#collapseMenu" aria-expanded="false" aria-controls="collapseMenu">
+            Catálogo de materiales
+          </button>
+          <div class="collapse" id="collapseMenu">
+            <ul>
+              <li class="menumuebles"><a href="./materiales.html">Cueros </a></li>
+              <li class="menumuebles"><a href="./materiales.html">Cueros sintéticos </a></li>
+              <li class="menumuebles"><a href="./materiales.html">Telas </a></li>
+              <li class="menumuebles"><a href="./materiales.html">Sintéticos </a></li>
+              <li class="menumuebles"><a href="./materiales.html">Maderas </a></li>
+              <li class="menumuebles"><a href="./materiales.html">Enchapados </a></li>
+              <li class="menumuebles"><a href="./materiales.html">Melaminas </a></li>
+              <li class="menumuebles"><a href="./materiales.html">Laqueados </a></li>
+              <li class="menumuebles"><a href="./materiales.html">Epoxi </a></li>
+              <li class="menumuebles"><a href="./materiales.html">Metales </a></li>
+              <li class="menumuebles"><a href="./materiales.html">Vidrios </a></li>
+              <li class="menumuebles"><a href="./materiales.html">Mármol </a></li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <footer id="pie" class="container-fluid pt-3">
+      <div class="row justify-content-around">
+        <address class="col-12 col-sm-6 text-center">
+          <h3>Contacto</h3>
+
+          <p>
+            <i class="fa-solid fa-phone"></i>
+            <span class="locDesc"> Teléfono: </span>
+            <a href="tel:+13115552368" target="_blank">(011) 4377-1111</a>
+          </p>
+          <p>
+            <i class="fa-solid fa-envelope"></i>
+            <span class="locDesc"> Mail: </span>
+            <a href="mailto:contacto@mondony.com">contacto@mondony.com</a>
+          </p>
+          <p class="redesSoc">
+            <a href="https://www.instagram.com/Mondony" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.facebook.com/Mondony" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://api.whatsapp.com/send?phone=+541160606060&text=Hola, nececito información!"
+              target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+          </p>
+        </address>
+        <address class="col-12 col-sm-6 text-center">
+          <h3>Nuestro local</h3>
+          <p>
+            <i class="fa-solid fa-location-dot"></i>
+            <span class="locDesc"> Dirección: </span>
+            <a href="https://goo.gl/maps/kyxgYUxf2kmExaaD6" target="_blank"
+              >Lorem ipsum dolor sit 1450.</a
+            >
+          </p>
+          <p>
+            <i class="fa-solid fa-clock"></i>
+            <span class="locDesc"> Horarios de atención: </span>lun-vier: 9 a 18
+            hs. y sab 10 a 13 hs.
+          </p>
+        </address>
+      </div>
+    </footer>
+
+    <script src="js/wow.min.js"></script>
+    <script>
+      new WOW().init();
+    </script>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
