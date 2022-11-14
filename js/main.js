@@ -11,7 +11,10 @@ class Producto {
         this.nombre = nombre;
         this.precio = precio;
     }
-
+    listate (){
+        return `Código de silla : ${this.id} - Modelo : ${this.nombre} - Precio : $ ${this.precio} \n`;
+    }
+    
 }
 
 const silla01 = new Producto(1,'wishbone',34000)
@@ -31,7 +34,8 @@ function mostrarProductos(){
     // });
 
     for (const silla of sillas){
-        productos = productos + `\n Código de silla : ${silla.id} - Modelo : ${silla.nombre} - Precio : ${silla.precio} `;
+        //productos = productos + `\n Código de silla : ${silla.id} - Modelo : ${silla.nombre} - Precio : ${silla.precio} `;
+        productos = productos + ' ' + silla.listate();
     }
 
     window.alert(productos);
