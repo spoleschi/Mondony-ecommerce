@@ -50,59 +50,65 @@ function mostrarProductos(){
 
 //Inicio de programa
 
-rta = window.confirm('¿Desea realizar una compra?');
+window.onload = function() { // can also use window.addEventListener('load', (event) => {
+    alert('Page loaded');
 
-//Ciclo para que el usuario ingrese los productos y cantidad deseada
-while (rta == true){
-    mostrarProductos();
-    producto = Number(prompt('Ingrese el nro. de modelo de silla que quiere comprar'));
-    let cant = Number(prompt('Ingresa la cantidad deseada'));
 
-    // switch (producto){
-    //     case 1:
-    //         totalcompras += sillas[0].precio * cant;
-    //         break;
-    //     case 2:
-    //         totalcompras += kennedy * cant;
-    //         break;
-    //     case 3:
-    //         totalcompras += moller * cant;
-    //         break;
-    //     case 4:
-    //         totalcompras += ch20 * cant;
-    //         break;
-    //     case 5:
-    //         totalcompras += grace * cant;
-    //         break;
-    //     case 6:
-    //         totalcompras += febo * cant;
-    //         break;
-    //     default:
-    //         window.alert('Debe ingresar un modelo válido de silla(del 1 al 6)')
-    // }
 
-//Utilizo un if accediendo al precio por la posición en el array para no recorrer todas las opciones en un switch...
-    
-if (isNaN(producto) == false && producto > 0 && producto < 7){
-        if (isNaN(cant) == false && cant > 0) {
-            totalcompras += sillas[Number(producto)-1].precio * cant;
-            pedido = pedido + cant + ' ' +  sillas[Number(producto)-1].nombre + ' \n'
-            window.alert(`Agregamos al carrito ${cant} unidad/es de la silla: ${sillas[Number(producto)-1].nombre}`);
+    rta = window.confirm('¿Desea realizar una compra?');
+
+    //Ciclo para que el usuario ingrese los productos y cantidad deseada
+    while (rta == true){
+        mostrarProductos();
+        producto = Number(prompt('Ingrese el nro. de modelo de silla que quiere comprar'));
+        let cant = Number(prompt('Ingresa la cantidad deseada'));
+
+        // switch (producto){
+        //     case 1:
+        //         totalcompras += sillas[0].precio * cant;
+        //         break;
+        //     case 2:
+        //         totalcompras += kennedy * cant;
+        //         break;
+        //     case 3:
+        //         totalcompras += moller * cant;
+        //         break;
+        //     case 4:
+        //         totalcompras += ch20 * cant;
+        //         break;
+        //     case 5:
+        //         totalcompras += grace * cant;
+        //         break;
+        //     case 6:
+        //         totalcompras += febo * cant;
+        //         break;
+        //     default:
+        //         window.alert('Debe ingresar un modelo válido de silla(del 1 al 6)')
+        // }
+
+    //Utilizo un if accediendo al precio por la posición en el array para no recorrer todas las opciones en un switch...
+        
+    if (isNaN(producto) == false && producto > 0 && producto < 7){
+            if (isNaN(cant) == false && cant > 0) {
+                totalcompras += sillas[Number(producto)-1].precio * cant;
+                pedido = pedido + cant + ' ' +  sillas[Number(producto)-1].nombre + ' \n'
+                window.alert(`Agregamos al carrito ${cant} unidad/es de la silla: ${sillas[Number(producto)-1].nombre}`);
+            }
+            else{
+                window.alert('Debe ingresar la cantidad deseada en números');
+            }
         }
         else{
-            window.alert('Debe ingresar la cantidad deseada en números');
+            window.alert('Debe ingresar un código de silla válido(del 1 al 6)');
         }
+
+        rta = window.confirm('¿Desea seleccionar otro pruducto?');
     }
-    else{
-        window.alert('Debe ingresar un código de silla válido(del 1 al 6)');
+
+    //Si se ha realizado la compra informo el pedido y el total de la operación
+    if (totalcompras){
+        window.alert(pedido);
+        window.alert(`El monto total de la compra es de $ ${totalcompras}`);
     }
 
-    rta = window.confirm('¿Desea seleccionar otro pruducto?');
 }
-
-//Si se ha realizado la compra informo el pedido y el total de la operación
-if (totalcompras){
-    window.alert(pedido);
-    window.alert(`El monto total de la compra es de $ ${totalcompras}`);
-}
-
