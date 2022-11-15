@@ -51,9 +51,7 @@ function mostrarProductos(){
 //Inicio de programa
 
 window.onload = function() { // can also use window.addEventListener('load', (event) => {
-    alert('Page loaded');
-
-
+    // alert('Page loaded');
 
     rta = window.confirm('¿Desea realizar una compra?');
 
