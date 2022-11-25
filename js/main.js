@@ -10,6 +10,7 @@ class Producto {
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
+        this.stock = 0;
     }
 
     //función de clase (se genera una vez por prototipo)
@@ -30,16 +31,62 @@ const silla06 = new Producto(6,'febo',24000)
 //Creo un array con los modelos de silla
 const sillas = [silla01, silla02,silla03, silla04,silla05, silla06]
 
-//Creo una función que muestra las opciones al usuario
-function mostrarProductos(){
-    let productos = 'Listado de Productos: \n';
-    
-    //Utilizando forEach
-    // sillas.forEach(function(element) {
-    //      productos = productos + `\n Código de silla : ${element.id} - Modelo : ${element.nombre} - Precio : ${element.precio} `;
-    // });
+//Alta productos
+function altaProducto() {
+    let nombre = prompt(`Ingrese el nombre del producto: `);
+    let precio = parceFloat(prompt(`Ingrese el precio del producto `));
+    let stock = parseInt(prompt(`Ingrese el stock inicial del producto `));
 
-    //Utilizando for of
+    //Obtengo el id máximo en mi array de sillas
+    // let arrayIds = []
+    // for (const silla of sillas){
+    //     arrayIds.push(silla.id)
+    // }
+
+    //Utilizando map
+    const arrayIds = sillas.map((el) => el.id)
+
+    const max = arrayIds.reduce((max, el) => {if(el>max) { return el} else{ return max} }, 0)
+    
+    const silla = new Producto(max,nombre,precio,stock);
+    sillas.push(silla);
+}
+
+//Baja productos
+function bajaProducto() {
+    let id = parseInt(prompt("Ingrese el ID del producto a eliminar "));
+    let silla = sillas.find(el => el.id == id);
+    let i = sillas.indexOf(silla);
+    arrayVoluntarios.splice(i, 1);
+    console.log(arrayVoluntarios);
+    // return arrayVoluntarios;
+}
+
+
+
+//Creo una función que muestra las opciones al usuario
+
+//Función declarada 
+// function mostrarProductos(){
+//     let productos = 'Listado de Productos: \n';
+    
+//     //Utilizando forEach
+//     // sillas.forEach(function(element) {
+//     //      productos = productos + `\n Código de silla : ${element.id} - Modelo : ${element.nombre} - Precio : ${element.precio} `;
+//     // });
+
+//     //Utilizando for of
+//     for (const silla of sillas){
+//         //productos = productos + `\n Código de silla : ${silla.id} - Modelo : ${silla.nombre} - Precio : ${silla.precio} `;
+//         productos = productos + ' ' + silla.listate();
+//     }
+
+//     window.alert(productos);
+// }
+
+//Función expresada - Arrow function
+const mostrarProductos = () => {
+    let productos = 'Listado de Productos: \n';
     for (const silla of sillas){
         //productos = productos + `\n Código de silla : ${silla.id} - Modelo : ${silla.nombre} - Precio : ${silla.precio} `;
         productos = productos + ' ' + silla.listate();
@@ -47,6 +94,10 @@ function mostrarProductos(){
 
     window.alert(productos);
 }
+
+//Funciones de valicación de entradas
+const validaProd = (producto) => isNaN(producto) == false && producto > 0 && producto < 7;
+const validaCant = cant => isNaN(cant) == false && cant > 0
 
 //Inicio de programa
 
@@ -85,9 +136,11 @@ window.onload = function() { // can also use window.addEventListener('load', (ev
         // }
 
     //Utilizo un if accediendo al precio por la posición en el array para no recorrer todas las opciones en un switch...
-        
-    if (isNaN(producto) == false && producto > 0 && producto < 7){
-            if (isNaN(cant) == false && cant > 0) {
+
+    
+
+    if (validaProd(producto)){
+            if (validaCant(cant)) {
                 totalcompras += sillas[Number(producto)-1].precio * cant;
                 pedido = pedido + cant + ' ' +  sillas[Number(producto)-1].nombre + ' \n'
                 window.alert(`Agregamos al carrito ${cant} unidad/es de la silla: ${sillas[Number(producto)-1].nombre}`);
