@@ -2,6 +2,36 @@
 let totalCompras = 0;
 const arrayPedido = [];
 
+//Clases
+
+class Producto {
+    constructor(id, nombre, precio){
+        this.id = id;
+        this.nombre = nombre;
+        this.precio = precio;
+        this.stock = 0;
+    }
+
+    //función de clase (se genera una vez por prototipo)
+    listate (){
+        return `Código de silla: ${this.id} - Modelo: ${this.nombre} - Precio: $ ${this.precio} \n`;
+    }
+}
+
+class Pedido {
+    constructor(idSilla, nombreSilla, cantidad, precio){
+        this.idSilla = idSilla;
+        this.nombreSilla = nombreSilla;
+        this.cantidad = cantidad;
+        this.precio = precio;
+    }
+   
+    listate (){
+        return `Código de silla: ${this.idSilla} - Modelo: ${this.nombreSilla} - Cant.: ${this.cantidad} - Precio: $ ${this.precio} \n`;
+    }
+}
+
+//Funciones
 
 function darOpciones() {
     if (totalCompras == 0){
@@ -77,34 +107,15 @@ const validaProd = (idBus) => sillas.some(el => el.id == idBus);
 
 const validaCant = cant => isNaN(cant) == false && cant > 0;
 
-//Clases
 
-class Producto {
-    constructor(id, nombre, precio){
-        this.id = id;
-        this.nombre = nombre;
-        this.precio = precio;
-        this.stock = 0;
-    }
-
-    //función de clase (se genera una vez por prototipo)
-    listate (){
-        return `Código de silla: ${this.id} - Modelo: ${this.nombre} - Precio: $ ${this.precio} \n`;
-    }
+function buscarIdx(valBus){
+    let indice = -1
+    arrayPedido.forEach((el,idx) => {
+        if (el.idSilla == valBus) indice = idx;
+    })
+    return indice
 }
 
-class Pedido {
-    constructor(idSilla, nombreSilla, cantidad, precio){
-        this.idSilla = idSilla;
-        this.nombreSilla = nombreSilla;
-        this.cantidad = cantidad;
-        this.precio = precio;
-    }
-   
-    listate (){
-        return `Código de silla: ${this.idSilla} - Modelo: ${this.nombreSilla} - Cant.: ${this.cantidad} - Precio: $ ${this.precio} \n`;
-    }
-}
 
 
 //Genero instancias de la clase producto con los distintos modelos de silla
@@ -138,9 +149,18 @@ window.onload = function() { // can also use window.addEventListener('load', (ev
                 let cant = Number(prompt('Ingresa la cantidad deseada'));
                 if (validaCant(cant)) {
                     //Debería buscar si ya ingresaron esa silla e incrementar la cant...
+                    
+                    //let idx = buscarIdx(proSelec.id);
+                    let idx = arrayPedido.findIndex(el => el.idSilla === proSelec.id);
+                    
+                    if (idx > -1) {
+                        arrayPedido[idx].cantidad += cant;
+                    }
+                    else{
+                        arrayPedido.push(new Pedido(proSelec.id,proSelec.nombre,cant,proSelec.precio));
+                    }
 
-                    totalCompras +=  proSelec.precio * cant;
-                    arrayPedido.push(new Pedido(proSelec.id,proSelec.nombre,cant,proSelec.precio));
+                    totalCompras +=  proSelec.precio * cant;    
                     window.alert(`Agregamos al carrito ${cant} unidad/es de la silla: ${proSelec.nombre}`);
                 }
                 else window.alert('Debe ingresar la cantidad deseada en números');
@@ -173,69 +193,7 @@ window.onload = function() { // can also use window.addEventListener('load', (ev
 
     // if (totalCompras>0){
     if (arrayPedido.length>0){
-        //window.alert(pedido);
         mostrarPedido();
         window.alert(`El monto total de la compra es de $ ${totalCompras}`);
     }
-
-
-
-    // rta = window.confirm('¿Desea realizar una compra?');
-
-    // //Ciclo para que el usuario ingrese los productos y cantidad deseada
-    // while (rta == true){
-    //     mostrarProductos();
-    //     producto = Number(prompt('Ingrese el nro. de modelo de silla que quiere comprar'));
-    //     let cant = Number(prompt('Ingresa la cantidad deseada'));
-
-    //     // switch (producto){
-    //     //     case 1:
-    //     //         totalCompras += sillas[0].precio * cant;
-    //     //         break;
-    //     //     case 2:
-    //     //         totalCompras += kennedy * cant;
-    //     //         break;
-    //     //     case 3:
-    //     //         totalCompras += moller * cant;
-    //     //         break;
-    //     //     case 4:
-    //     //         totalCompras += ch20 * cant;
-    //     //         break;
-    //     //     case 5:
-    //     //         totalCompras += grace * cant;
-    //     //         break;
-    //     //     case 6:
-    //     //         totalCompras += febo * cant;
-    //     //         break;
-    //     //     default:
-    //     //         window.alert('Debe ingresar un modelo válido de silla(del 1 al 6)')
-    //     // }
-
-    // //Utilizo un if accediendo al precio por la posición en el array para no recorrer todas las opciones en un switch...
-
-    
-
-    // if (validaProd(producto)){
-    //         if (validaCant(cant)) {
-    //             totalCompras += sillas[Number(producto)-1].precio * cant;
-    //             pedido = pedido + cant + ' ' +  sillas[Number(producto)-1].nombre + ' \n'
-    //             window.alert(`Agregamos al carrito ${cant} unidad/es de la silla: ${sillas[Number(producto)-1].nombre}`);
-    //         }
-    //         else{
-    //             window.alert('Debe ingresar la cantidad deseada en números');
-    //         }
-    //     }
-    //     else{
-    //         window.alert('Debe ingresar un código de silla válido(del 1 al 6)');
-    //     }
-
-    //     rta = window.confirm('¿Desea seleccionar otro pruducto?');
-    // }
-
-    // //Si se ha realizado la compra informo el pedido y el total de la operación
-    // if (totalCompras){
-    //     window.alert(pedido);
-    //     window.alert(`El monto total de la compra es de $ ${totalCompras}`);
-    // }
-
 }
