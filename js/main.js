@@ -119,12 +119,12 @@ function buscarIdx(valBus){
 
 //Genero instancias de la clase producto con los distintos modelos de silla
 
-const silla01 = new Producto(1,'wishbone',34000,'./images/Sillas/wishbone.jpg');
-const silla02 = new Producto(2,'kennedy',29000,'./images/Sillas/kennedy.jpg');
-const silla03 = new Producto(3,'moller',23000,'./images/Sillas/moller.jpg');
-const silla04 = new Producto(4,'ch20',25000,'./images/Sillas/Ch20Elbow.jpg');
-const silla05 = new Producto(5,'grace',39000,'./images/Sillas/grace.jpg');
-const silla06 = new Producto(6,'febo',24000,'./images/Sillas/febo.jpg');
+const silla01 = new Producto(1,'Wishbone',34000,'./images/Sillas/wishbone.jpg');
+const silla02 = new Producto(2,'Kennedy',29000,'./images/Sillas/kennedy.jpg');
+const silla03 = new Producto(3,'Moller',23000,'./images/Sillas/moller.jpg');
+const silla04 = new Producto(4,'Ch20',25000,'./images/Sillas/Ch20Elbow.jpg');
+const silla05 = new Producto(5,'Grace',39000,'./images/Sillas/grace.jpg');
+const silla06 = new Producto(6,'Febo',24000,'./images/Sillas/febo.jpg');
 
 //Creo un array con los modelos de silla
 const sillas = [silla01, silla02,silla03, silla04,silla05, silla06]
@@ -133,16 +133,16 @@ const sillas = [silla01, silla02,silla03, silla04,silla05, silla06]
 
 const resultado = document.getElementById("resultado");
 
-// Ver como agregar las imágenes a objetos
-
+// Cargo las sillas a las cards de html
 
 for ( let silla of sillas ){
     resultado.innerHTML += `
     <div class="card m-3" style="width: 18rem;" id="resultado">
         <img src= ${silla.imagen} class="card-img-top" alt="...">
         <div class="card-body">
-            <h5 class="card-title">Nombre: ${silla.nombre}</h5>
-            <p class="card-text">Valor: ${silla.precio}</p>
+            <h5 class="card-title"> ${silla.nombre}</h5>
+            <p class="card-text">Precio: ${silla.precio}</p>
+            <a href="#" class="buttonBig btn-colorDark-colorLight2">Agreagar al carrito</a>
         </div>
     </div>
     `
