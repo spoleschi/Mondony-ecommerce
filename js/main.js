@@ -142,7 +142,7 @@ for ( let silla of sillas ){
         <div class="card-body">
             <h5 class="card-title"> ${silla.nombre}</h5>
             <p class="card-text">Precio: ${silla.precio}</p>
-            <a href="#" class="buttonBig btn-colorDark-colorLight2">Agreagar al carrito</a>
+            <a href="#" id = "button${silla.id}" class="buttonBig btn-colorDark-colorLight2"  data-toggle="modal" data-target="#exampleModal">Agreagar al carrito</a>
         </div>
     </div>
     `

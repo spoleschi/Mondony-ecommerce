@@ -24,3 +24,10 @@
 .card-img-top{
     height: 300px;
 }
+
+
+
+
+.me-auto {
+  margin-right: auto !important;
+}
