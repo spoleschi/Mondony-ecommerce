@@ -25,9 +25,19 @@
     height: 300px;
 }
 
-
-
-
 .me-auto {
   margin-right: auto !important;
+}
+
+
+#cant{
+    width: 3.2rem;
+    padding: 10px;
+    margin: 1rem;
+}
+
+#sumaCant, #restaCant{
+    width: 3rem;
+    height: 3rem;
+    margin: 0.5rem;
 }
