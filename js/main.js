@@ -1,6 +1,7 @@
 //Defino e inicializo variables
 let totalCompras = 0;
 const arrayPedido = [];
+let articuloSelec = -1;
 
 //Clases
 
@@ -131,33 +132,26 @@ const sillas = [silla01, silla02,silla03, silla04,silla05, silla06]
 
 //Main
 
-const resultado = document.getElementById("resultado");
+const contenedor = document.getElementById("contenedor");
 
 // Cargo las sillas a las cards de html
 
-for ( let silla of sillas ){
-    resultado.innerHTML += `
-    <div class="card m-3" style="width: 18rem;" id="resultado">
-        <img src= ${silla.imagen} class="card-img-top" alt="...">
-        <div class="card-body">
-            <h5 class="card-title"> ${silla.nombre}</h5>
-            <p class="card-text">Precio: ${silla.precio}</p>
-            <a href="#" id = "button${silla.id}" class="buttonBig btn-colorDark-colorLight2"  data-toggle="modal" data-target="#agregaProd">Agreagar al carrito</a>
+const cargarProductos = () => {
+    for ( let silla of sillas ){
+        contenedor.innerHTML += `
+        <div class="card m-3" style="width: 18rem;" id="resultado">
+            <img src= ${silla.imagen} class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title"> ${silla.nombre}</h5>
+                <p class="card-text">Precio: ${silla.precio}</p>
+                <a href="#" id = "button${silla.id}" class="buttonBig btn-colorDark-colorLight2"  data-toggle="modal" data-target="#agregaProd">Agreagar al carrito</a>
+            </div>
         </div>
-    </div>
-    `
+        `
+        const boton = document.getElementById(`button${silla.id}`);
+        boton.addEventListener("click", () => articuloSelec = silla.id)
+    }
 }
-
-let theText = cant.value;
-
-//const $cant = document.querySelector("#cant")
-const $cant = document.getElementById("cant")
-const sumaCant = document.getElementById("sumaCant")
-const restaCant = document.getElementById("restaCant")
-
-sumaCant.addEventListener("click",() => $cant.value = parseInt($cant.value) + 1 )
-restaCant.addEventListener("click",() => parseInt($cant.value) > 1 ? $cant.value = parseInt($cant.value) - 1 : 1 )
-
 
 
 

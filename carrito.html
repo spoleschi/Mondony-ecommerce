@@ -54,67 +54,34 @@
               </li>
           </ul>
           <form class="d-flex">
-              <!-- <button id="linkCarro" class="btn btn-outline-dark" type="submit">
+              <button class="btn btn-outline-dark" type="submit">
                   <i class="bi-cart-fill me-1"></i>
                   Carro
                   <span id="cantCarrito" class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-              </button> -->
-              <a href="#secCarro" id="linkCarro" class="btn btn-outline-dark">
-                <i class="bi-cart-fill me-1"></i>
-                Carro
-                <span id="cantCarrito" class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-              </a>
+              </button>
           </form>
       </div>
     </nav>
 
     
     <div class="container">
-      <div class="contenedor" id="contenedor">
-
-      </div>
-
-      <!-- Modal -->
-      <div class="modal fade" id="agregaProd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Agregar producto</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              Cantidad: <input id ="cant" type="text" value="1" readonly>
-              <button type="button" id="sumaCant">+</button>
-              <button type="button" id="restaCant">-</button>
-            </div>
-            <div class="modal-footer">
-              <button type="button" id ="agregaArt" class="buttonBig btn-colorDark-colorLight2" data-dismiss="modal">Agregar</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <section id= "secCarro" class="formaPago mb-5">
-        <h3 class="mt-5">Carrito de compras</h3>
-
-        <table class="d-flex mt-2 mb-2">
-          <tbody id="carrito" >
-            <tr>
-              <th>Id producto</th>
-              <th>Nombre silla</th>
-              <th>Cantidad</th>
-              <th>Precio</th>
-              <th>Total</th>
-              <th>Eliminar</th>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-
+        <section class="formaPago mb-5">
+            <h1 class="m-5">Carrito de compras</h1>
+    
+            <table class="d-flex mt-2 mb-2">
+              <tbody id="carrito2" >
+                <tr>
+                  <th>Id producto</th>
+                  <th>Nombre silla</th>
+                  <th>Cantidad</th>
+                  <th>Precio</th>
+                  <th>Total</th>
+                </tr>
+              </tbody>
+            </table>
+        </section>
     </div>
+
 
     <footer id="pie" class="container-fluid pt-3">
         <div class="row justify-content-around">
