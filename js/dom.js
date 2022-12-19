@@ -1,6 +1,6 @@
 //Defino e inicializo variables
 let totalCompras = 0;
-const arrayPedido = [];
+let arrayPedido = [];
 let articuloSelec = -1;
 
 //Clases
@@ -106,6 +106,7 @@ const $sumaCant = document.getElementById("sumaCant")
 const $restaCant = document.getElementById("restaCant")
 const $agregaArt = document.getElementById("agregaArt")
 const $cantCarrito = document.getElementById("cantCarrito");
+const DOMcarrito = document.querySelector('#carrito');
 
 $sumaCant.addEventListener("click",() => $cant.value = parseInt($cant.value) + 1 )
 $restaCant.addEventListener("click",() => parseInt($cant.value) > 1 ? $cant.value = parseInt($cant.value) - 1 : 1 )
@@ -123,30 +124,9 @@ $agregaArt.onclick = () => {
             background: "linear-gradient(to right, #000000, #cccccc)",
         }
     }).showToast();
+    $cant.value = "1";
 };
 
-
-
-const $linkCarro = document.getElementById("linkCarro");
-
-// $linkCarro.onclick = () => {
-//     window.location.href = "carrito.html";
-//     //const $carrito2 = document.getElementById("carrito2");
-
-//     // arrayPedido.forEach(el => {
-//     //     const fila = document.createElement("tr");
-
-//     //     fila.innerHTML = `<tr>
-//     //                     <td>${el.idSilla}</td>
-//     //                     <td>${el.nombreSilla}</td>
-//     //                     <td>${el.cantidad}</td>
-//     //                     <td>${el.precio}</td>
-//     //                     <td>${el.precio * el.cant}</td>
-//     //                     </tr>`
-//     //     $carrito2.appendChild(fila);
-//     // });
-
-// }
 
 
 let agregarProd = () => {
@@ -156,10 +136,10 @@ let agregarProd = () => {
     let idx = arrayPedido.findIndex(el => el.idSilla === proSelec.id);
                     
     if (idx > -1) {
-        arrayPedido[idx].cantidad += $cant.value;
+        arrayPedido[idx].cantidad += Number($cant.value);
     }
     else{
-        arrayPedido.push(new Pedido(proSelec.id,proSelec.nombre,$cant.value,proSelec.precio));
+        arrayPedido.push(new Pedido(proSelec.id,proSelec.nombre,Number($cant.value),proSelec.precio));
     }
 
     totalCompras +=  proSelec.precio * $cant;    
@@ -167,26 +147,84 @@ let agregarProd = () => {
     console.log(arrayPedido);
 
     $cantCarrito.innerText = arrayPedido.length.toString();
+    mostrarCarrito();
+    renderizarCarrito();
+
+}
+
+const mostrarCarrito = () => {
+    
     const $carrito = document.getElementById("carrito");
-    const fila = document.createElement("tr");
+    $carrito.innerHTML = `<tr>
+                            <th class="priority-4">Id</th>
+                            <th>Desc.</th>
+                            <th>Cant.</th>
+                            <th class="priority-5">Precio</th>
+                            <th>Total</th>
+                            <th>Quitar</th>
+                        </tr>`
 
-    fila.innerHTML = `<tr>
-                        <td>${proSelec.id}</td>
-                        <td>${proSelec.nombre}</td>
-                        <td>${$cant.value}</td>
-                        <td>${proSelec.precio}</td>
-                        <td>${proSelec.precio * $cant.value}</td>
-                    </tr>`
+    arrayPedido.forEach((el) => {
+        const fila = document.createElement("tr");
 
-                                      // Boton de borrar
-                  const miBoton = document.createElement('button');
-                  miBoton.classList.add('btn', 'btn-outline-secondary','mx-5');
-                  miBoton.textContent = 'X';
-                  miBoton.style.marginLeft = '1rem';
-                //   miBoton.addEventListener('click', borrarItemCarrito);
-                  fila.appendChild(miBoton);
+        fila.innerHTML =`<td class="priority-4">${el.idSilla}</td>
+                        <td>${el.nombreSilla}</td>
+                        <td>${el.cantidad}</td>
+                        <td class="priority-5">${el.precio}</td>
+                        <td>${el.precio * el.cantidad}</td>`
+        // Boton de borrar
+        const colBoton = document.createElement('td');
+        colBoton.style.textAlign = 'center';
+        const miBoton = document.createElement('button');
+        miBoton.classList.add('btn', 'btn-outline-secondary');
+        miBoton.textContent = 'X';
+        miBoton.dataset.item = el.idSilla;
+        miBoton.addEventListener('click', borrarItemCarrito);
+        colBoton.appendChild(miBoton);
+        fila.appendChild(colBoton);
+        $carrito.appendChild(fila);
+    })
+}
+
+function renderizarCarrito() {
+
+    arrayPedido.forEach((item) => {
+
+        const miNodo = document.createElement('li');
+        miNodo.classList.add('list-group-item', 'text-right', 'mx-2');
+        miNodo.textContent = `${item.cantidad} x ${item.nombreSilla} - ${item.precio} '$'`;
+        // Boton de borrar
+        const miBoton = document.createElement('button');
+        miBoton.classList.add('btn', 'btn-danger', 'mx-5');
+        miBoton.textContent = 'X';
+        miBoton.style.marginLeft = '1rem';
+        miBoton.dataset.item = item.idSilla;
+        miBoton.addEventListener('click', borrarItemCarrito);
+        // Mezclamos nodos
+        miNodo.appendChild(miBoton);
+        DOMcarrito.appendChild(miNodo);
+    });
+   // Renderizamos el precio total en el HTML
+   //DOMtotal.textContent = calcularTotal();
+}
 
 
-    $carrito.appendChild(fila);
+function borrarItemCarrito(evento) {
+    // Obtenemos el producto ID que hay en el boton pulsado
+    const id = evento.target.dataset.item;
+    // Borramos todos los productos
+    arrayPedido = arrayPedido.filter((el) => {
+        return el.idSilla !== Number(id);
+    });
+    // volvemos a renderizar
+    $cantCarrito.innerText = arrayPedido.length.toString();
+    mostrarCarrito();
+    renderizarCarrito();
+}
+
+function borrarItemCarrito2(evento) {
+    // Obtenemos el producto ID que hay en el boton pulsado
+    const id = evento.target.dataset.item;
+    console.log(id);
 }
 
