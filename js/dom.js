@@ -98,7 +98,15 @@ const cargarProductos = () => {
     })
 }
 
-cargarProductos();
+const limpiarCarrito = () => {
+    arrayPedido = [];
+    mostrarCarrito();
+    calcularTotal();
+
+    //localStorage: 
+    localStorage.clear();
+}
+
 
 //const $cant = document.querySelector("#cant")
 const $cant = document.getElementById("cant")
@@ -106,13 +114,16 @@ const $sumaCant = document.getElementById("sumaCant")
 const $restaCant = document.getElementById("restaCant")
 const $agregaArt = document.getElementById("agregaArt")
 const $cantCarrito = document.getElementById("cantCarrito");
-const DOMcarrito = document.querySelector('#carrito');
+const $carrito = document.getElementById("carrito");
+const $vaciar = document.querySelector('#vaciarCarrito');
+const $total = document.querySelector('#total');
 
 $sumaCant.addEventListener("click",() => $cant.value = parseInt($cant.value) + 1 )
 $restaCant.addEventListener("click",() => parseInt($cant.value) > 1 ? $cant.value = parseInt($cant.value) - 1 : 1 )
+$vaciar.addEventListener('click',limpiarCarrito);
 
 $agregaArt.onclick = () => {
-    let $cant = document.getElementById("cant");
+    
     console.log(articuloSelec, $cant, $cant.value);
     agregarProd();
 
@@ -124,10 +135,9 @@ $agregaArt.onclick = () => {
             background: "linear-gradient(to right, #000000, #cccccc)",
         }
     }).showToast();
+    
     $cant.value = "1";
 };
-
-
 
 let agregarProd = () => {
 
@@ -142,19 +152,19 @@ let agregarProd = () => {
         arrayPedido.push(new Pedido(proSelec.id,proSelec.nombre,Number($cant.value),proSelec.precio));
     }
 
-    totalCompras +=  proSelec.precio * $cant;    
+    //totalCompras +=  proSelec.precio * Number($cant.value);    
     console.log(`Agregamos al carrito ${$cant.value} unidad/es de la silla: ${proSelec.nombre}`);
     console.log(arrayPedido);
 
-    $cantCarrito.innerText = arrayPedido.length.toString();
+    localStorage.setItem("carrito", JSON.stringify(arrayPedido));
+    calcularTotal();
     mostrarCarrito();
-    renderizarCarrito();
+    //mostrarCarritoEnLi();
 
 }
 
 const mostrarCarrito = () => {
     
-    const $carrito = document.getElementById("carrito");
     $carrito.innerHTML = `<tr>
                             <th class="priority-4">Id</th>
                             <th>Desc.</th>
@@ -167,7 +177,7 @@ const mostrarCarrito = () => {
     arrayPedido.forEach((el) => {
         const fila = document.createElement("tr");
 
-        fila.innerHTML =`<td class="priority-4">${el.idSilla}</td>
+        fila.innerHTML =`<td class="priority-4" >${el.idSilla}</td>
                         <td>${el.nombreSilla}</td>
                         <td>${el.cantidad}</td>
                         <td class="priority-5">${el.precio}</td>
@@ -183,16 +193,18 @@ const mostrarCarrito = () => {
         colBoton.appendChild(miBoton);
         fila.appendChild(colBoton);
         $carrito.appendChild(fila);
+
     })
+    $cantCarrito.innerText = arrayPedido.length.toString();
 }
 
-function renderizarCarrito() {
+function mostrarCarritoEnLi() {
 
     arrayPedido.forEach((item) => {
 
         const miNodo = document.createElement('li');
         miNodo.classList.add('list-group-item', 'text-right', 'mx-2');
-        miNodo.textContent = `${item.cantidad} x ${item.nombreSilla} - ${item.precio} '$'`;
+        miNodo.textContent = `${item.cantidad} x ${item.nombreSilla} - $ ${item.precio}`;
         // Boton de borrar
         const miBoton = document.createElement('button');
         miBoton.classList.add('btn', 'btn-danger', 'mx-5');
@@ -202,29 +214,46 @@ function renderizarCarrito() {
         miBoton.addEventListener('click', borrarItemCarrito);
         // Mezclamos nodos
         miNodo.appendChild(miBoton);
-        DOMcarrito.appendChild(miNodo);
+        $carrito.appendChild(miNodo);
     });
+
    // Renderizamos el precio total en el HTML
    //DOMtotal.textContent = calcularTotal();
 }
 
-
 function borrarItemCarrito(evento) {
-    // Obtenemos el producto ID que hay en el boton pulsado
+    // Obtengo el producto ID que hay en el boton pulsado
     const id = evento.target.dataset.item;
-    // Borramos todos los productos
+
+    let pedSelec = arrayPedido.find(el => el.idSilla == id);
+    //totalCompras -=  pedSelec.precio * pedSelec.cantidad;
+    
     arrayPedido = arrayPedido.filter((el) => {
         return el.idSilla !== Number(id);
     });
-    // volvemos a renderizar
-    $cantCarrito.innerText = arrayPedido.length.toString();
-    mostrarCarrito();
-    renderizarCarrito();
+    
+    //localStorage: 
+    localStorage.setItem("carrito", JSON.stringify(arrayPedido));
+
+    calcularTotal();
+        
+    mostrarCarrito();   
+    //mostrarCarritoEnLi();
 }
 
-function borrarItemCarrito2(evento) {
-    // Obtenemos el producto ID que hay en el boton pulsado
-    const id = evento.target.dataset.item;
-    console.log(id);
+function calcularTotal()
+{   
+    totalCompras = 0;
+    arrayPedido.forEach(element => {
+        totalCompras += element.cantidad * element.precio;
+    });
+    $total.innerText = "$ " + totalCompras;
 }
 
+// Inicio
+if(localStorage.getItem("carrito")) {
+    arrayPedido = JSON.parse(localStorage.getItem("carrito"));
+}
+calcularTotal()
+cargarProductos();
+mostrarCarrito();
