@@ -35,12 +35,12 @@ function buscarIdx(valBus){
 
 //Genero instancias de la clase producto con los distintos modelos de silla
 
-const silla01 = new Producto(1,'Wishbone',34000,'./images/Sillas/wishbone.jpg');
-const silla02 = new Producto(2,'Kennedy',29000,'./images/Sillas/kennedy.jpg');
-const silla03 = new Producto(3,'Moller',23000,'./images/Sillas/moller.jpg');
+const silla01 = new Producto(1,'Wishbone',34000,'./images/Sillas/Wishbone.jpg');
+const silla02 = new Producto(2,'Kennedy',29000,'./images/Sillas/Kennedy.jpg');
+const silla03 = new Producto(3,'Moller',23000,'./images/Sillas/Moller.jpg');
 const silla04 = new Producto(4,'Ch20',25000,'./images/Sillas/Ch20Elbow.jpg');
-const silla05 = new Producto(5,'Grace',39000,'./images/Sillas/grace.jpg');
-const silla06 = new Producto(6,'Febo',24000,'./images/Sillas/febo.jpg');
+const silla05 = new Producto(5,'Grace',39000,'./images/Sillas/Grace.jpg');
+const silla06 = new Producto(6,'Febo',24000,'./images/Sillas/Febo.jpg');
 
 //Creo un array con los modelos de silla
 const sillas = [silla01, silla02,silla03, silla04,silla05, silla06]
