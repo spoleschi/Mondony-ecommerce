@@ -108,7 +108,7 @@ const limpiarCarrito = () => {
 }
 
 
-//const $cant = document.querySelector("#cant")
+//Variables del DOM
 const $cant = document.getElementById("cant")
 const $sumaCant = document.getElementById("sumaCant")
 const $restaCant = document.getElementById("restaCant")
@@ -138,30 +138,6 @@ $agregaArt.onclick = () => {
     
     $cant.value = "1";
 };
-
-let agregarProd = () => {
-
-    let proSelec = sillas.find(el => el.id == articuloSelec);
-
-    let idx = arrayPedido.findIndex(el => el.idSilla === proSelec.id);
-                    
-    if (idx > -1) {
-        arrayPedido[idx].cantidad += Number($cant.value);
-    }
-    else{
-        arrayPedido.push(new Pedido(proSelec.id,proSelec.nombre,Number($cant.value),proSelec.precio));
-    }
-
-    //totalCompras +=  proSelec.precio * Number($cant.value);    
-    console.log(`Agregamos al carrito ${$cant.value} unidad/es de la silla: ${proSelec.nombre}`);
-    console.log(arrayPedido);
-
-    localStorage.setItem("carrito", JSON.stringify(arrayPedido));
-    calcularTotal();
-    mostrarCarrito();
-    //mostrarCarritoEnLi();
-
-}
 
 const mostrarCarrito = () => {
     
@@ -195,7 +171,7 @@ const mostrarCarrito = () => {
         $carrito.appendChild(fila);
 
     })
-    $cantCarrito.innerText = arrayPedido.length.toString();
+    calcularTotal();
 }
 
 function mostrarCarritoEnLi() {
@@ -216,27 +192,52 @@ function mostrarCarritoEnLi() {
         miNodo.appendChild(miBoton);
         $carrito.appendChild(miNodo);
     });
-
+    calcularTotal();
    // Renderizamos el precio total en el HTML
    //DOMtotal.textContent = calcularTotal();
+}
+
+let agregarProd = () => {
+
+    let proSelec = sillas.find(el => el.id == articuloSelec);
+
+    let idx = arrayPedido.findIndex(el => el.idSilla === proSelec.id);
+                    
+    if (idx > -1) {
+        arrayPedido[idx].cantidad += Number($cant.value);
+    }
+    else{
+        arrayPedido.push(new Pedido(proSelec.id,proSelec.nombre,Number($cant.value),proSelec.precio));
+    }
+
+    //totalCompras +=  proSelec.precio * Number($cant.value);    
+    console.log(`Agregamos al carrito ${$cant.value} unidad/es de la silla: ${proSelec.nombre}`);
+    console.log(arrayPedido);
+
+    localStorage.setItem("carrito", JSON.stringify(arrayPedido));
+    
+    mostrarCarrito();
+    //mostrarCarritoEnLi();
 }
 
 function borrarItemCarrito(evento) {
     // Obtengo el producto ID que hay en el boton pulsado
     const id = evento.target.dataset.item;
 
-    let pedSelec = arrayPedido.find(el => el.idSilla == id);
-    //totalCompras -=  pedSelec.precio * pedSelec.cantidad;
-    
+    // let pedSelec = arrayPedido.find(el => el.idSilla == id);
+    // let indexSelec = arrayPedido.indexOf(pedSelec);
+    // arrayPedido.splice(indexSelec, 1);
+
+    //Lo hago más fácil con filter (ya que defino arrayPedido con let por uso de localStorage)...
     arrayPedido = arrayPedido.filter((el) => {
         return el.idSilla !== Number(id);
     });
     
+    //totalCompras -=  pedSelec.precio * pedSelec.cantidad;
+    
     //localStorage: 
     localStorage.setItem("carrito", JSON.stringify(arrayPedido));
-
-    calcularTotal();
-        
+      
     mostrarCarrito();   
     //mostrarCarritoEnLi();
 }
@@ -248,12 +249,13 @@ function calcularTotal()
         totalCompras += element.cantidad * element.precio;
     });
     $total.innerText = "$ " + totalCompras;
+    $cantCarrito.innerText = arrayPedido.length.toString();
 }
 
 // Inicio
 if(localStorage.getItem("carrito")) {
     arrayPedido = JSON.parse(localStorage.getItem("carrito"));
 }
-calcularTotal()
+calcularTotal();
 cargarProductos();
 mostrarCarrito();
