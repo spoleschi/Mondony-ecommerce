@@ -42,14 +42,28 @@
     margin: 0.5rem;
 }
 
-@media screen and (max-width: 768px){
+
+.priority-4, .priority-5{
+    display:none;
+}
+
+@media screen and (min-width: 992px){
+    .priority-5{
+        display:table-cell;
+    }
+    .priority-4{
+        display:table-cell;
+    }
+}
+
+/* @media screen and (max-width: 768px){
     .priority-5{
         display:none;
     }
     .priority-4{
         display:none;
     }
-}
+} */
 
 #secCarro{
     margin: auto;
