@@ -108,23 +108,6 @@ const limpiarCarrito = () => {
 }
 
 
-function numberFormat(e) {
-    if (e.trim()=="" || e.trim()=="-") {
-        return;
-    }
- 
-    // Obtenemos un array con el numero y los decimales si hay
-    let contenido = e.replace(/[^0-9\.]/g, "").split(".");
- 
-    // añadimos los separadores de miles al primer numero del array
-    contenido[0] = contenido[0].length ? new Intl.NumberFormat('en-US').format(parseInt(contenido[0])) : "0";
- 
-    // Juntamos el numero con los decimales si hay decimales
-    let resultado=contenido.length>1 ? contenido.slice(0, 2).join(".") : contenido[0];
-    e=e[0]=="-" ? "-"+resultado : resultado;
-}
-
-
 //Variables del DOM
 const $cant = document.getElementById("cant")
 const $sumaCant = document.getElementById("sumaCant")
@@ -132,12 +115,30 @@ const $restaCant = document.getElementById("restaCant")
 const $agregaArt = document.getElementById("agregaArt")
 const $cantCarrito = document.getElementById("cantCarrito");
 const $carrito = document.getElementById("carrito");
-const $vaciar = document.querySelector('#vaciarCarrito');
+const $vaciar = document.querySelector('#vaciar');
+const $comprar = document.querySelector('#comprar');
 const $total = document.querySelector('#total');
+
 
 $sumaCant.addEventListener("click",() => $cant.value = parseInt($cant.value) + 1 )
 $restaCant.addEventListener("click",() => parseInt($cant.value) > 1 ? $cant.value = parseInt($cant.value) - 1 : 1 )
 $vaciar.addEventListener('click',limpiarCarrito);
+
+// $comprar.addEventListener("click", () => {
+//     new swal("Good job!", "You clicked the button!", "success")
+// })
+
+$comprar.addEventListener("click", () => {
+    Swal.fire({
+        title: "Compra realizada",
+        text: "Gracias por elegir Mondony Muebles, Arte y Diseño",
+        icon: "success",
+        button: "btn",
+        confirmButtonText: "Aceptar",
+        showCancelButton: true,
+        cancelButtonText: "Aceptar"
+    })
+})
 
 $agregaArt.onclick = () => {
     

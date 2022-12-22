@@ -1,0 +1,8 @@
+[
+    {"id": 1, "nombre": "Wishbone", "precio":34000, "imagen":"./images/Sillas/Wishbone.jpg", "stock":0},
+    {"id": 2, "nombre": "Kennedy", "precio":29000, "imagen":"./images/Sillas/Kennedy.jpg", "stock":0},
+    {"id": 3, "nombre": "Moller", "precio":23000, "imagen":"./images/Sillas/Moller.jpg", "stock":0},
+    {"id": 4, "nombre": "Ch20", "precio":25000, "imagen":"./images/Sillas/Ch20Elbow.jpg", "stock":0},
+    {"id": 5, "nombre": "Grace", "precio":39000, "imagen":"./images/Sillas/Grace.jpg", "stock":0},
+    {"id": 6, "nombre": "Grace", "precio":24000, "imagen":"./images/Sillas/Febo.jpg", "stock":0}
+]

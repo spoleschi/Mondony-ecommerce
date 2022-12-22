@@ -75,3 +75,8 @@
 #secCarro p{
     text-align:end;
 }
+
+#botonesCarrito{
+    display: flex;
+    justify-content: space-between;
+}
