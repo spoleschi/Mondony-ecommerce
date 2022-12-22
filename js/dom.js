@@ -128,15 +128,21 @@ $vaciar.addEventListener('click',limpiarCarrito);
 //     new swal("Good job!", "You clicked the button!", "success")
 // })
 
+console.log($comprar.style);
+
+console.log(window.getComputedStyle($comprar));
+let a = window.getComputedStyle($comprar).backgroundColor;
+console.log(a);
+
 $comprar.addEventListener("click", () => {
     Swal.fire({
-        title: "Compra realizada",
+        title: "Compra realizada!",
         text: "Gracias por elegir Mondony Muebles, Arte y Diseño",
         icon: "success",
-        button: "btn",
+        iconColor: "gray",
         confirmButtonText: "Aceptar",
-        showCancelButton: true,
-        cancelButtonText: "Aceptar"
+        customClass:{confirmButton: 'buttonBig btn-colorLight-colorDarkv'}
+
     })
 })
 
@@ -182,6 +188,8 @@ const mostrarCarrito = () => {
         const miBoton = document.createElement('button');
         miBoton.classList.add('btn', 'btn-outline-secondary');
         miBoton.textContent = 'X';
+        //Utilizo un data-attribute...
+        //miBoton.setAttribute("item",el.idSilla);
         miBoton.dataset.item = el.idSilla;
         miBoton.addEventListener('click', borrarItemCarrito);
         colBoton.appendChild(miBoton);
