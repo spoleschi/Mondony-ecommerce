@@ -8,9 +8,7 @@
     <title>Mondony Ecommerce</title>
 
     <!-- Fontawesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="./css/bootstrap.min.css" />
@@ -41,10 +39,16 @@
 
         <div class="collapse navbar-collapse mr-5" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-              <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
-              <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+              <li class="nav-item active">
+                <a class="nav-link" href="./index.html">Inicio <span class="sr-only">(current)</span></a>
+              </li>
+
+              <li class="nav-item"><a class="nav-link" aria-current="page" href="#!" data-toggle="collapse" data-target="#navbarSupportedContent">Home</a></li>
+              
+              <li class="nav-item"><a class="nav-link" href="#!" data-toggle="collapse" data-target="#navbarSupportedContent">About</a></li>
+
               <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+                  <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-toggle="dropdown" aria-expanded="false">Shop</a>
                   <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                       <li><a class="dropdown-item" href="#!">All Products</a></li>
                       <li><hr class="dropdown-divider" /></li>
@@ -53,13 +57,14 @@
                   </ul>
               </li>
           </ul>
+          
           <form class="d-flex">
-              <!-- <button id="linkCarro" class="btn btn-outline-dark" type="submit">
+              <!-- <button id="linkCarro" class="btn btn-outline-dark" type="submit" data-toggle="modal" data-target="#carritoModal">
                   <i class="bi-cart-fill me-1"></i>
                   Carro
                   <span id="cantCarrito" class="badge bg-dark text-white ms-1 rounded-pill">0</span>
               </button> -->
-              <a href="#secCarro" id="linkCarro" class="btn btn-outline-dark">
+              <a href="#secCarro" id="linkCarro" class="btn btn-outline-dark"  data-toggle="modal" data-target="#carritoModal"  data-toggle="modal" data-target="#carritoModal">
                 <i class="bi-cart-fill me-1"></i>
                 Carro
                 <span id="cantCarrito" class="badge bg-dark text-white ms-1 rounded-pill">0</span>
@@ -70,11 +75,9 @@
 
     
     <div class="container">
-      <div class="contenedor" id="contenedor">
+      <div class="contenedor" id="contenedor"></div>
 
-      </div>
-
-      <!-- Modal -->
+      <!-- Modal para agregar productos -->
       <div class="modal fade" id="agregaProd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
@@ -97,7 +100,7 @@
         </div>
       </div>
 
-      <section id= "secCarro" class="formaPago mt-5 mb-5">
+      <!-- <section id= "secCarro" class="formaPago mt-5 mb-5">
         <h3 class="mb-4">Carrito de compras</h3>
 
         <table class="d-flex mt-2 mb-2">
@@ -108,13 +111,41 @@
         
         <p><b> Total compra: <span id="total"></span> </b></p>
         <div id="botonesCarrito">
-          <button id="vaciar" class="buttonBig btn-colorLight-colorDark">Vaciar</button>
-          <button id="comprar" class="buttonBig btn-colorLight-colorDark">Comprar</button>
+          <button id="vaciar" class="btn btn-secondary">Vaciar</button>
+          <button id="comprar" class="btn btn-secondary">Comprar</button>
         </div>
-      </section>
+      </section> -->
 
-      <!-- Elementos del carrito -->
-      <ul id="carrito2" class="list-group"></ul>
+      <!-- Hago el carrito modal -->
+      <div class="modal" tabindex="-1" id="carritoModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Carrito de compras</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <section id= "secCarro" class="formaPago ">
+                <table class="d-flex mt-2 mb-2">
+                  <tbody id="carrito" >
+                  </tbody>
+                </table>
+                <p><b> Total compra: <span id="total"></span> </b></p>
+                <button id="vaciar" class="btn btn-secondary">Vaciar</button>
+              </section>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal"  data-toggle="collapse" data-target="#navbarSupportedContent">Cerrar</button>
+              <button type="button" id="comprar" class="btn btn-primary" data-dismiss="modal"  data-toggle="collapse" data-target="#navbarSupportedContent">Finalizar compra</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Carrito ul-->
+      <!-- <ul id="carrito2" class="list-group"></ul> -->
 
     </div>
 
@@ -166,8 +197,8 @@
       <!-- Toastify -->
       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
       <!-- SWEET ALERT -->
-      //<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-      
+      <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script src="./js/dom.js"></script>
 </body>
 </html>

@@ -35,42 +35,63 @@ function buscarIdx(valBus){
 
 //Genero instancias de la clase producto con los distintos modelos de silla
 
-const silla01 = new Producto(1,'Wishbone',34000,'./images/Sillas/Wishbone.jpg');
+const silla01 = new Producto(1,'Wishbone',24000,'./images/Sillas/Wishbone.jpg');
 const silla02 = new Producto(2,'Kennedy',29000,'./images/Sillas/Kennedy.jpg');
 const silla03 = new Producto(3,'Moller',23000,'./images/Sillas/Moller.jpg');
 const silla04 = new Producto(4,'Ch20',25000,'./images/Sillas/Ch20Elbow.jpg');
 const silla05 = new Producto(5,'Grace',39000,'./images/Sillas/Grace.jpg');
-const silla06 = new Producto(6,'Febo',24000,'./images/Sillas/Febo.jpg');
+const silla06 = new Producto(6,'Febo',28000,'./images/Sillas/Febo.jpg');
 
 //Creo un array con los modelos de silla
 const sillas = [silla01, silla02,silla03, silla04,silla05, silla06]
 
 // Cargo las sillas a las cards de html
 
-//Si concateno con innerHTML no funciona el botón ¿?...
-
 const contenedor = document.getElementById("contenedor");
 
-const cargarProductosMal = () => {
-    sillas.forEach(silla  => {
+//Creando el evento en el innerHTML
+// const cargarProductos2 = () => {
+//     sillas.forEach(silla  => {
         
-        contenedor.innerHTML += 
-                        `<div class="card m-3" style="width: 18rem;">
-                            <img src= ${silla.imagen} class="card-img-top" alt=" ${silla.nombre}">
-                            <div class="card-body">
-                                <h5 class="card-title"> ${silla.nombre}</h5>
-                                <p class="card-text">Precio: ${silla.precio}</p>
-                                <a href="#" id = "boton${silla.id}" class="buttonBig btn-colorDark-colorLight2"  data-toggle="modal" data-target="#agregaProd">Agreagar al carrito</a>
-                            </div>
-                        </div>`
-        const boton = document.getElementById(`boton${silla.id}`);
-        boton.addEventListener("click", () => {
-            console.log(silla.id);
-            articuloSelec = silla.id;
-        })
+//         contenedor.innerHTML += 
+//                         `<div class="card m-3" style="width: 18rem;">
+//                             <img src= ${silla.imagen} class="card-img-top" alt=" ${silla.nombre}">
+//                             <div class="card-body">
+//                                 <h5 class="card-title"> ${silla.nombre}</h5>
+//                                 <p class="card-text">Precio: ${silla.precio}</p>
+//                                 <button onclick="agregarProducto(${silla.id})" class="buttonBig btn-colorDark-colorLight2"  data-toggle="modal" data-target="#agregaProd">Agreagar al carrito</button>
+//                             </div>
+//                         </div>`
+//     })
+// }
 
-    })
-}
+// function agregarProducto(id){
+//     console.log(id);
+//     articuloSelec = id;
+// }
+
+
+//Si concateno con innerHTML no funciona el botón, con appendChild si ¿?...
+// const cargarProductosMal = () => {
+//     sillas.forEach(silla  => {
+        
+//         contenedor.innerHTML += 
+//                         `<div class="card m-3" style="width: 18rem;">
+//                             <img src= ${silla.imagen} class="card-img-top" alt=" ${silla.nombre}">
+//                             <div class="card-body">
+//                                 <h5 class="card-title"> ${silla.nombre}</h5>
+//                                 <p class="card-text">Precio: ${silla.precio}</p>
+//                                 <a href="#" id = "boton${silla.id}" class="buttonBig btn-colorDark-colorLight2"  data-toggle="modal" data-target="#agregaProd">Agreagar al carrito</a>
+//                             </div>
+//                         </div>`
+//         const boton = document.getElementById(`boton${silla.id}`);
+//         boton.addEventListener("click", () => {
+//             console.log(silla.id);
+//             articuloSelec = silla.id;
+//         })
+
+//     })
+// }
 
 const cargarProductos = () => {
     sillas.forEach(silla  => {
@@ -130,8 +151,9 @@ $vaciar.addEventListener('click',limpiarCarrito);
 
 console.log($comprar.style);
 
-console.log(window.getComputedStyle($comprar));
-let a = window.getComputedStyle($comprar).backgroundColor;
+console.log(getComputedStyle($comprar));
+let a = getComputedStyle($comprar).getPropertyValue("backGroudColor");
+let b = getComputedStyle($comprar).backgroundColor;
 console.log(a);
 
 $comprar.addEventListener("click", () => {
@@ -142,8 +164,9 @@ $comprar.addEventListener("click", () => {
         iconColor: "gray",
         confirmButtonText: "Aceptar",
         customClass:{confirmButton: 'buttonBig btn-colorLight-colorDarkv'}
-
     })
+    limpiarCarrito();
+
 })
 
 $agregaArt.onclick = () => {
@@ -165,39 +188,67 @@ $agregaArt.onclick = () => {
 
 const mostrarCarrito = () => {
     
-    $carrito.innerHTML = `<tr>
-                            <th class="priority-4">Id</th>
-                            <th>Desc.</th>
-                            <th>Cant.</th>
-                            <th class="priority-5">Precio</th>
-                            <th>Total</th>
-                            <th>Quitar</th>
-                        </tr>`
+    if (arrayPedido.length === 0)
+    {
+        $carrito.innerHTML = `<p><b> El carrito se encuentra vacío </b></p>`
+                
+        //Oculto modificando valor de propiedad dysplay:
+        $vaciar.style.setProperty("display","none");
+        //$comprar.style.setProperty("display","none");
+        
+        //Lo mismo pero con notación punto:
+        //$comprar.style.display = "none";
+        
+        //Lo oculto agregando clase CSS
+        $comprar.classList.add("oculta");
 
-    arrayPedido.forEach((el) => {
-        const fila = document.createElement("tr");
+        // console.log(getComputedStyle($vaciar).display);
+        // console.log($vaciar.style);
+        // console.log($vaciar.getAttribute("style"));
+    }
+    else
+    {   
+        $vaciar.style.setProperty("display","inline-block");
+        $comprar.classList.remove("oculta");
 
-        fila.innerHTML =`<td class="priority-4" >${el.idSilla}</td>
-                        <td>${el.nombreSilla}</td>
-                        <td>${el.cantidad}</td>
-                        <td class="priority-5">${new Intl.NumberFormat().format(el.precio)}</td>
-                        <td>${new Intl.NumberFormat().format(el.precio * el.cantidad)}</td>`
-        // Boton de borrar
-        const colBoton = document.createElement('td');
-        colBoton.style.textAlign = 'center';
-        const miBoton = document.createElement('button');
-        miBoton.classList.add('btn', 'btn-outline-secondary');
-        miBoton.textContent = 'X';
-        //Utilizo un data-attribute...
-        //miBoton.setAttribute("item",el.idSilla);
-        miBoton.dataset.item = el.idSilla;
-        miBoton.addEventListener('click', borrarItemCarrito);
-        colBoton.appendChild(miBoton);
-        fila.appendChild(colBoton);
-        $carrito.appendChild(fila);
+        $carrito.innerHTML = `<tr>
+                                <th class="priority-4">Id</th>
+                                <th>Desc.</th>
+                                <th>Cant.</th>
+                                <th class="priority-5">Precio</th>
+                                <th>Total</th>
+                                <th>Quitar</th>
+                            </tr>`
 
-    })
-    calcularTotal();
+        arrayPedido.forEach((el) => {
+
+            //Desestructuración
+            const {idSilla, nombreSilla, cantidad, precio} = el;
+
+            const fila = document.createElement("tr");
+
+            fila.innerHTML =`<td class="priority-4" >${idSilla}</td>
+                            <td>${nombreSilla}</td>
+                            <td>${cantidad}</td>
+                            <td class="priority-5">${new Intl.NumberFormat().format(precio)}</td>
+                            <td>${new Intl.NumberFormat().format(precio * cantidad)}</td>`
+            // Boton de borrar
+            const colBoton = document.createElement('td');
+            colBoton.style.textAlign = 'center';
+            const miBoton = document.createElement('button');
+            miBoton.classList.add('btn', 'btn-outline-secondary');
+            miBoton.textContent = 'X';
+            //Utilizo un data-attribute...
+            //miBoton.setAttribute("item",el.idSilla);
+            miBoton.dataset.item = idSilla;
+            miBoton.addEventListener('click', borrarItemCarrito);
+            colBoton.appendChild(miBoton);
+            fila.appendChild(colBoton);
+            $carrito.appendChild(fila);
+
+        })
+        calcularTotal();
+    }
 }
 
 function mostrarCarritoEnLi() {
@@ -263,8 +314,8 @@ function borrarItemCarrito(evento) {
     
     //localStorage: 
     localStorage.setItem("carrito", JSON.stringify(arrayPedido));
-      
     mostrarCarrito();   
+    calcularTotal();
     //mostrarCarritoEnLi();
 }
 
@@ -280,9 +331,19 @@ function calcularTotal()
 }
 
 // Inicio
-if(localStorage.getItem("carrito")) {
-    arrayPedido = JSON.parse(localStorage.getItem("carrito"));
-}
+
+//Cargo carrito desde Local Storage
+// if(localStorage.getItem("carrito")) {
+//     arrayPedido = JSON.parse(localStorage.getItem("carrito"));
+// }
+
+//Utilizo operador OR
+// arrayPedido = JSON.parse(localStorage.getItem("carrito")) || []
+
+
+//Utilizo operador NULLISH
+arrayPedido = JSON.parse(localStorage.getItem("carrito")) ?? []
+
 calcularTotal();
 cargarProductos();
 mostrarCarrito();

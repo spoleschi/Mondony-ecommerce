@@ -54,6 +54,12 @@
     .priority-4{
         display:table-cell;
     }
+    .modal-dialog {
+        max-width: 600px;
+    }
+    #secCarro{
+        font-size: 16px;
+    }
 }
 
 /* @media screen and (max-width: 768px){
@@ -67,16 +73,26 @@
 
 #secCarro{
     margin: auto;
-    padding: 1rem;
+    padding: 0.5rem;
     display: inline-block;
     border: solid 1px black;
+    font-size: 14px;
 }
 
 #secCarro p{
     text-align:end;
+    padding: 0.5rem;
 }
 
-#botonesCarrito{
+/* #botonesCarrito{
     display: flex;
     justify-content: space-between;
+} */
+
+.modal-content {
+    text-align: center;
+}
+
+.oculta{
+    display: none;
 }
