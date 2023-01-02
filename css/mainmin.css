@@ -47,21 +47,6 @@
     display:none;
 }
 
-@media screen and (min-width: 992px){
-    .priority-5{
-        display:table-cell;
-    }
-    .priority-4{
-        display:table-cell;
-    }
-    .modal-dialog {
-        max-width: 600px;
-    }
-    #secCarro{
-        font-size: 16px;
-    }
-}
-
 /* @media screen and (max-width: 768px){
     .priority-5{
         display:none;
@@ -95,4 +80,34 @@
 
 .oculta{
     display: none;
+}
+
+#linkCarro{
+    position: absolute;
+    top: 1rem;
+    right: 100px;
+    cursor: pointer;
+}
+
+
+@media screen and (min-width: 992px){
+    .priority-5{
+        display:table-cell;
+    }
+    .priority-4{
+        display:table-cell;
+    }
+    .modal-dialog {
+        max-width: 600px;
+    }
+    #secCarro{
+        font-size: 16px;
+    }
+}
+
+
+@media screen and (min-width: 768px){
+    #linkCarro {
+        right: 2rem;
+    }
 }

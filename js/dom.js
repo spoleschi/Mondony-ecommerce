@@ -43,15 +43,15 @@ const silla05 = new Producto(5,'Grace',39000,'./images/Sillas/Grace.jpg');
 const silla06 = new Producto(6,'Febo',28000,'./images/Sillas/Febo.jpg');
 
 //Creo un array con los modelos de silla
-const sillas = [silla01, silla02,silla03, silla04,silla05, silla06]
+const productos = [silla01, silla02,silla03, silla04,silla05, silla06]
 
-// Cargo las sillas a las cards de html
+// Cargo las productos a las cards de html
 
 const contenedor = document.getElementById("contenedor");
 
 //Creando el evento en el innerHTML
 // const cargarProductos2 = () => {
-//     sillas.forEach(silla  => {
+//     productos.forEach(silla  => {
         
 //         contenedor.innerHTML += 
 //                         `<div class="card m-3" style="width: 18rem;">
@@ -73,7 +73,7 @@ const contenedor = document.getElementById("contenedor");
 
 //Si concateno con innerHTML no funciona el botón, con appendChild si ¿?...
 // const cargarProductosMal = () => {
-//     sillas.forEach(silla  => {
+//     productos.forEach(silla  => {
         
 //         contenedor.innerHTML += 
 //                         `<div class="card m-3" style="width: 18rem;">
@@ -94,7 +94,7 @@ const contenedor = document.getElementById("contenedor");
 // }
 
 const cargarProductos = () => {
-    sillas.forEach(silla  => {
+    productos.forEach(silla  => {
         const card = document.createElement("div");
         //card.classList.add("col-xl-3", "col-md-6", "col-xs-12");
         card.innerHTML = 
@@ -276,7 +276,7 @@ function mostrarCarritoEnLi() {
 
 let agregarProd = () => {
 
-    let proSelec = sillas.find(el => el.id == articuloSelec);
+    let proSelec = productos.find(el => el.id == articuloSelec);
 
     let idx = arrayPedido.findIndex(el => el.idSilla === proSelec.id);
                     

@@ -28,10 +28,24 @@
 </head>
 <body>
     <nav class="navbar sticky-top navbar-expand-md navbar-light" id="menunav">
-        <a class="navbar-brand logo ml-5" href="./index.html"> 
+        <a class="navbar-brand logo ml-3" href="./index.html"> 
           <p class="logo1">Mondony</p>
           <p class="logo2">Muebles, arte y diseño</p>
         </a>
+
+
+        <form class="d-flex">
+          <!-- <button id="linkCarro" class="btn btn-outline-dark" type="submit" data-toggle="modal" data-target="#carritoModal">
+              <i class="bi-cart-fill me-1"></i>
+              Carro
+              <span id="cantCarrito" class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+          </button> -->
+          <a href="#secCarro" id="linkCarro" class="btn btn-outline-dark"  data-toggle="modal" data-target="#carritoModal"  data-toggle="modal" data-target="#carritoModal">
+            <i class="bi-cart-fill me-1"></i>
+              <span id="cantCarrito" class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+          </a>
+        </form>
+
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -58,19 +72,10 @@
               </li>
           </ul>
           
-          <form class="d-flex">
-              <!-- <button id="linkCarro" class="btn btn-outline-dark" type="submit" data-toggle="modal" data-target="#carritoModal">
-                  <i class="bi-cart-fill me-1"></i>
-                  Carro
-                  <span id="cantCarrito" class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-              </button> -->
-              <a href="#secCarro" id="linkCarro" class="btn btn-outline-dark"  data-toggle="modal" data-target="#carritoModal"  data-toggle="modal" data-target="#carritoModal">
-                <i class="bi-cart-fill me-1"></i>
-                Carro
-                <span id="cantCarrito" class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-              </a>
-          </form>
+          
+          
       </div>
+
     </nav>
 
     
@@ -137,8 +142,8 @@
               </section>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal"  data-toggle="collapse" data-target="#navbarSupportedContent">Cerrar</button>
-              <button type="button" id="comprar" class="btn btn-primary" data-dismiss="modal"  data-toggle="collapse" data-target="#navbarSupportedContent">Finalizar compra</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+              <button type="button" id="comprar" class="buttonBig btn-colorDark-colorLight2" data-dismiss="modal">Finalizar compra</button>
             </div>
           </div>
         </div>
