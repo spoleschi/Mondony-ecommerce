@@ -6,8 +6,9 @@ let articuloSelec = -1;
 //Clases
 
 class Producto {
-    constructor(id, nombre, precio, imagen){
+    constructor(id, tipoMueble, nombre, precio, imagen){
         this.id = id;
+        this.tipoMueble = tipoMueble;
         this.nombre = nombre;
         this.precio = precio;
         this.imagen = imagen;
@@ -16,9 +17,9 @@ class Producto {
 }
 
 class Pedido {
-    constructor(idSilla, nombreSilla, cantidad, precio){
-        this.idSilla = idSilla;
-        this.nombreSilla = nombreSilla;
+    constructor(idProducto, nomproducto, cantidad, precio){
+        this.idProducto = idProducto;
+        this.nomproducto = nomproducto;
         this.cantidad = cantidad;
         this.precio = precio;
     }
@@ -28,38 +29,53 @@ class Pedido {
 function buscarIdx(valBus){
     let indice = -1
     arrayPedido.forEach((el,idx) => {
-        if (el.idSilla == valBus) indice = idx;
+        if (el.idProducto == valBus) indice = idx;
     })
     return indice
 }
 
-//Genero instancias de la clase producto con los distintos modelos de silla
+// Genero instancias de la clase producto con los distintos modelos de producto
 
-const silla01 = new Producto(1,'Wishbone',24000,'./images/Sillas/Wishbone.jpg');
-const silla02 = new Producto(2,'Kennedy',29000,'./images/Sillas/Kennedy.jpg');
-const silla03 = new Producto(3,'Moller',23000,'./images/Sillas/Moller.jpg');
-const silla04 = new Producto(4,'Ch20',25000,'./images/Sillas/Ch20Elbow.jpg');
-const silla05 = new Producto(5,'Grace',39000,'./images/Sillas/Grace.jpg');
-const silla06 = new Producto(6,'Febo',28000,'./images/Sillas/Febo.jpg');
+// const producto01 = new Producto(1,'Silla','Wishbone',24000,'./images/Sillas/Wishbone.jpg');
+// const producto02 = new Producto(2,'Silla','Kennedy',29000,'./images/Sillas/Kennedy.jpg');
+// const producto03 = new Producto(3,'Silla','Moller',23000,'./images/Sillas/Moller.jpg');
+// const producto04 = new Producto(4,'Silla','Ch20',25000,'./images/Sillas/Ch20Elbow.jpg');
+// const producto05 = new Producto(5,'Silla','Grace',39000,'./images/Sillas/Grace.jpg');
+// const producto06 = new Producto(6,'Silla','Febo',28000,'./images/Sillas/Febo.jpg');
 
-//Creo un array con los modelos de silla
-const productos = [silla01, silla02,silla03, silla04,silla05, silla06]
+// Creo un array con los modelos de producto
+//const productos = [producto01, producto02,producto03, producto04,producto05, producto06]
+
+
+//cargo productos desde json
+
+const BBDD = "json/productos.json";
+const productos = [];
+
+fetch(BBDD)
+    .then((response) => response.json())
+    .then((data) => {
+        productos.push(...data);
+        cargarProductos();
+        //pintarBurgers(productos);
+    })
+    .catch(error => console.error(error))
+
 
 // Cargo las productos a las cards de html
 
-const contenedor = document.getElementById("contenedor");
 
 //Creando el evento en el innerHTML
 // const cargarProductos2 = () => {
-//     productos.forEach(silla  => {
+//     productos.forEach(producto => {
         
 //         contenedor.innerHTML += 
 //                         `<div class="card m-3" style="width: 18rem;">
-//                             <img src= ${silla.imagen} class="card-img-top" alt=" ${silla.nombre}">
+//                             <img src= ${producto.imagen} class="card-img-top" alt=" ${producto.nombre}">
 //                             <div class="card-body">
-//                                 <h5 class="card-title"> ${silla.nombre}</h5>
-//                                 <p class="card-text">Precio: ${silla.precio}</p>
-//                                 <button onclick="agregarProducto(${silla.id})" class="buttonBig btn-colorDark-colorLight2"  data-toggle="modal" data-target="#agregaProd">Agreagar al carrito</button>
+//                                 <h5 class="card-title"> ${producto.nombre}</h5>
+//                                 <p class="card-text">Precio: ${producto.precio}</p>
+//                                 <button onclick="agregarProducto(${producto.id})" class="buttonBig btn-colorDark-colorLight2"  data-toggle="modal" data-target="#agregaProd">Agreagar al carrito</button>
 //                             </div>
 //                         </div>`
 //     })
@@ -73,48 +89,52 @@ const contenedor = document.getElementById("contenedor");
 
 //Si concateno con innerHTML no funciona el botón, con appendChild si ¿?...
 // const cargarProductosMal = () => {
-//     productos.forEach(silla  => {
+//     productos.forEach(producto => {
         
 //         contenedor.innerHTML += 
 //                         `<div class="card m-3" style="width: 18rem;">
-//                             <img src= ${silla.imagen} class="card-img-top" alt=" ${silla.nombre}">
+//                             <img src= ${producto.imagen} class="card-img-top" alt=" ${producto.nombre}">
 //                             <div class="card-body">
-//                                 <h5 class="card-title"> ${silla.nombre}</h5>
-//                                 <p class="card-text">Precio: ${silla.precio}</p>
-//                                 <a href="#" id = "boton${silla.id}" class="buttonBig btn-colorDark-colorLight2"  data-toggle="modal" data-target="#agregaProd">Agreagar al carrito</a>
+//                                 <h5 class="card-title"> ${producto.nombre}</h5>
+//                                 <p class="card-text">Precio: ${producto.precio}</p>
+//                                 <a href="#" id = "boton${producto.id}" class="buttonBig btn-colorDark-colorLight2"  data-toggle="modal" data-target="#agregaProd">Agreagar al carrito</a>
 //                             </div>
 //                         </div>`
-//         const boton = document.getElementById(`boton${silla.id}`);
+//         const boton = document.getElementById(`boton${producto.id}`);
 //         boton.addEventListener("click", () => {
-//             console.log(silla.id);
-//             articuloSelec = silla.id;
+//             console.log(producto.id);
+//             articuloSelec = producto.id;
 //         })
 
 //     })
 // }
 
+
 const cargarProductos = () => {
-    productos.forEach(silla  => {
+    productos.forEach(producto => {
         const card = document.createElement("div");
+        card.classList.add("contProd");
         //card.classList.add("col-xl-3", "col-md-6", "col-xs-12");
         card.innerHTML = 
-                        `<div class="card m-3" style="width: 18rem;">
-                            <img src= ${silla.imagen} class="card-img-top" alt=" ${silla.nombre}">
+                        `<div class="card m-3" style="width: 20rem;">
+                            <div class = "contImg">
+                            <img src= ${producto.imagen} class="card-img-top" alt=" ${producto.nombre}">
+                            </div>
                             <div class="card-body">
-                                <h5 class="card-title"> ${silla.nombre}</h5>
-                                <p class="card-text">Precio: ${silla.precio}</p>
-                                <a href="#" id = "boton${silla.id}" class="buttonBig btn-colorDark-colorLight2"  data-toggle="modal" data-target="#agregaProd">Agreagar al carrito</a>
+                                <h5 class="card-title"> ${producto.nombre}</h5>
+                                <p class="card-text">Precio: ${new Intl.NumberFormat('es-AR', {style: 'currency',   currency: 'ARS',}).format(producto.precio)} </p>
+                                <a href="#" id = "boton${producto.id}" class="buttonBig btn-colorDark-colorLight2"  data-toggle="modal" data-target="#agregaProd">Agreagar al carrito</a>
                             </div>
                         </div>`
         contenedor.appendChild(card);
 
         //Agregar productos al carrito: 
 
-        const boton = document.getElementById(`boton${silla.id}`);
+        const boton = document.getElementById(`boton${producto.id}`);
         boton.addEventListener("click", () => {
             //agregarAlCarrito(producto.id)
-            console.log(silla.id);
-            articuloSelec = silla.id;
+            console.log(producto.id);
+            articuloSelec = producto.id;
         })
     })
 }
@@ -130,6 +150,7 @@ const limpiarCarrito = () => {
 
 
 //Variables del DOM
+const contenedor = document.getElementById("contenedor");
 const $cant = document.getElementById("cant")
 const $sumaCant = document.getElementById("sumaCant")
 const $restaCant = document.getElementById("restaCant")
@@ -140,6 +161,9 @@ const $vaciar = document.querySelector('#vaciar');
 const $comprar = document.querySelector('#comprar');
 const $total = document.querySelector('#total');
 
+const $btnSillas = document.querySelector('#btnSillas');
+const $btnBancos = document.querySelector('#btnBancos');
+const $btnSofas = document.querySelector('#btnSofas');
 
 $sumaCant.addEventListener("click",() => $cant.value = parseInt($cant.value) + 1 )
 $restaCant.addEventListener("click",() => parseInt($cant.value) > 1 ? $cant.value = parseInt($cant.value) - 1 : 1 )
@@ -223,12 +247,12 @@ const mostrarCarrito = () => {
         arrayPedido.forEach((el) => {
 
             //Desestructuración
-            const {idSilla, nombreSilla, cantidad, precio} = el;
+            const {idProducto, nomproducto, cantidad, precio} = el;
 
             const fila = document.createElement("tr");
 
-            fila.innerHTML =`<td class="priority-4" >${idSilla}</td>
-                            <td>${nombreSilla}</td>
+            fila.innerHTML =`<td class="priority-4" >${idProducto}</td>
+                            <td>${nomproducto}</td>
                             <td>${cantidad}</td>
                             <td class="priority-5">${new Intl.NumberFormat().format(precio)}</td>
                             <td>${new Intl.NumberFormat().format(precio * cantidad)}</td>`
@@ -239,8 +263,8 @@ const mostrarCarrito = () => {
             miBoton.classList.add('btn', 'btn-outline-secondary');
             miBoton.textContent = 'X';
             //Utilizo un data-attribute...
-            //miBoton.setAttribute("item",el.idSilla);
-            miBoton.dataset.item = idSilla;
+            //miBoton.setAttribute("item",el.idProducto);
+            miBoton.dataset.item = idProducto;
             miBoton.addEventListener('click', borrarItemCarrito);
             colBoton.appendChild(miBoton);
             fila.appendChild(colBoton);
@@ -257,13 +281,13 @@ function mostrarCarritoEnLi() {
 
         const miNodo = document.createElement('li');
         miNodo.classList.add('list-group-item', 'text-right', 'mx-2');
-        miNodo.textContent = `${item.cantidad} x ${item.nombreSilla} - $ ${item.precio}`;
+        miNodo.textContent = `${item.cantidad} x ${item.nomproducto} - $ ${item.precio}`;
         // Boton de borrar
         const miBoton = document.createElement('button');
         miBoton.classList.add('btn', 'btn-danger', 'mx-5');
         miBoton.textContent = 'X';
         miBoton.style.marginLeft = '1rem';
-        miBoton.dataset.item = item.idSilla;
+        miBoton.dataset.item = item.idProducto;
         miBoton.addEventListener('click', borrarItemCarrito);
         // Mezclamos nodos
         miNodo.appendChild(miBoton);
@@ -278,7 +302,7 @@ let agregarProd = () => {
 
     let proSelec = productos.find(el => el.id == articuloSelec);
 
-    let idx = arrayPedido.findIndex(el => el.idSilla === proSelec.id);
+    let idx = arrayPedido.findIndex(el => el.idProducto === proSelec.id);
                     
     if (idx > -1) {
         arrayPedido[idx].cantidad += Number($cant.value);
@@ -288,7 +312,7 @@ let agregarProd = () => {
     }
 
     //totalCompras +=  proSelec.precio * Number($cant.value);    
-    console.log(`Agregamos al carrito ${$cant.value} unidad/es de la silla: ${proSelec.nombre}`);
+    console.log(`Agregamos al carrito ${$cant.value} unidad/es de la producto: ${proSelec.nombre}`);
     console.log(arrayPedido);
 
     localStorage.setItem("carrito", JSON.stringify(arrayPedido));
@@ -301,13 +325,13 @@ function borrarItemCarrito(evento) {
     // Obtengo el producto ID que hay en el boton pulsado
     const id = evento.target.dataset.item;
 
-    // let pedSelec = arrayPedido.find(el => el.idSilla == id);
+    // let pedSelec = arrayPedido.find(el => el.idProducto == id);
     // let indexSelec = arrayPedido.indexOf(pedSelec);
     // arrayPedido.splice(indexSelec, 1);
 
     //Lo hago más fácil con filter (ya que defino arrayPedido con let por uso de localStorage)...
     arrayPedido = arrayPedido.filter((el) => {
-        return el.idSilla !== Number(id);
+        return el.idProducto !== Number(id);
     });
     
     //totalCompras -=  pedSelec.precio * pedSelec.cantidad;
@@ -325,7 +349,7 @@ function calcularTotal()
     arrayPedido.forEach(element => {
         totalCompras += element.cantidad * element.precio;
     });
-    $total.innerText = new Intl.NumberFormat('en-US', {style: 'currency',   currency: 'USD',}).format(totalCompras);
+    $total.innerText = new Intl.NumberFormat('es-AR', {style: 'currency',   currency: 'ARS',}).format(totalCompras);
     
     $cantCarrito.innerText = arrayPedido.length.toString();
 }
@@ -345,5 +369,80 @@ function calcularTotal()
 arrayPedido = JSON.parse(localStorage.getItem("carrito")) ?? []
 
 calcularTotal();
-cargarProductos();
+// cargarProductos();
 mostrarCarrito();
+
+
+//Filtro
+
+const $formulario = document.getElementById("formulario");
+
+const filtrar = () =>{
+
+    contenedor.innerHTML = '';
+    
+    const texto = $formulario.value.toLowerCase();
+    for ( let producto of productos ){
+        let nombre= producto.nombre.toLowerCase() + producto.tipoMueble.toLowerCase();
+
+        if ( nombre.indexOf(texto) !== -1){
+            //cargarProductos()
+            const card = document.createElement("div");
+            card.classList.add("contProd");
+            //card.classList.add("col-xl-3", "col-md-6", "col-xs-12");
+            card.innerHTML = 
+                            `<div class="card m-3" style="width: 20rem;">
+                                <div class = "contImg">
+                                <img src= ${producto.imagen} class="card-img-top" alt=" ${producto.nombre}">
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title"> ${producto.nombre}</h5>
+                                    <p class="card-text">Precio: ${new Intl.NumberFormat('es-AR', {style: 'currency',   currency: 'ARS',}).format(producto.precio)} </p>
+                                    <a href="#" id = "boton${producto.id}" class="buttonBig btn-colorDark-colorLight2"  data-toggle="modal" data-target="#agregaProd">Agreagar al carrito</a>
+                                </div>
+                            </div>`
+            contenedor.appendChild(card);
+
+            //Agregar productos al carrito: 
+
+            const boton = document.getElementById(`boton${producto.id}`);
+            boton.addEventListener("click", () => {
+                //agregarAlCarrito(producto.id)
+                console.log(producto.id);
+                articuloSelec = producto.id;
+            })
+                
+        }
+
+    }
+    if ( contenedor.innerHTML === '' ){
+        contenedor.innerHTML = `<li>Producto no encontrado</li>`
+    }
+
+}
+
+
+$formulario.addEventListener('keyup', filtrar);
+
+$btnSillas.addEventListener('click',() => {
+    $formulario.value = "silla";
+    filtrar();
+    $formulario.value = "";
+    } 
+);
+
+$btnBancos.addEventListener('click',() => {
+    $formulario.value = "banco";
+    filtrar();
+    $formulario.value = "";
+    } 
+);
+
+$btnSofas.addEventListener('click',() => {
+    $formulario.value = "sofa";
+    filtrar();
+    $formulario.value = "";
+    } 
+);
+
+

@@ -22,7 +22,13 @@
 }
 
 .card-img-top{
-    height: 300px;
+     max-height: 320px; 
+} 
+
+.contImg{
+    height: 320px; 
+    display: flex;
+    align-items: center;
 }
 
 .me-auto {
@@ -110,4 +116,22 @@
     #linkCarro {
         right: 2rem;
     }
+}
+
+
+.form-control:focus {
+  color: #495057;
+  background-color: #fff;
+  border-color: #636568;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(11, 12, 14, 0.25);
+}
+
+
+.dropdown-menu button{
+    text-transform: uppercase;
+}
+
+#navbarSupportedContent button{
+    font-size: 0.8rem;
 }
