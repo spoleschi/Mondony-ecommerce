@@ -181,15 +181,40 @@ let b = getComputedStyle($comprar).backgroundColor;
 console.log(a);
 
 $comprar.addEventListener("click", () => {
-    Swal.fire({
-        title: "Compra realizada!",
-        text: "Gracias por elegir Mondony Muebles, Arte y Diseño",
-        icon: "success",
-        iconColor: "gray",
-        confirmButtonText: "Aceptar",
-        customClass:{confirmButton: 'buttonBig btn-colorLight-colorDarkv'}
-    })
-    limpiarCarrito();
+    if (usu == undefined){
+        // Swal.fire({
+        //     title: "No se ha logueado!",
+        //     text: "Debe loguearse para comprar",
+        //     icon: "success",
+        //     iconColor: "gray",
+        //     confirmButtonText: "Aceptar",
+        //     customClass:{confirmButton: 'buttonBig btn-colorLight-colorDarkv'}
+        // })
+
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            timer: 2000,
+            showConfirmButton: false,
+            text: 'Debe loguearse para comprar',
+          })
+
+        setTimeout( () => {
+            $linkLog.click();
+        }, 2000)
+    }
+    else
+    {
+        Swal.fire({
+            title: "Compra realizada!",
+            text: "Gracias por elegir Mondony Muebles, Arte y Diseño",
+            icon: "success",
+            iconColor: "gray",
+            confirmButtonText: "Aceptar",
+            customClass:{confirmButton: 'buttonBig btn-colorLight-colorDarkv'}
+        })
+        limpiarCarrito();
+    }
 
 })
 
@@ -446,3 +471,40 @@ $btnSofas.addEventListener('click',() => {
 );
 
 
+//Login
+
+
+const $linkLog = document.getElementById("linkLog");
+
+const usuarioAutorizado = "bobo";
+const passwordAutorizado = "1234";
+
+let usu;
+
+linkLog.addEventListener("click", () => {
+    Swal.fire( {
+        title: "Login",
+        html: `<input type ="text" id="usuario" class="swal2-input" style="width: 95%; margin: 1rem 0.1rem" placeholder ="Usuario">
+                <input type ="text" id="password" class="swal2-input" style="width: 95%; margin: 0.1rem" placeholder ="Password">`,
+        confirmButtonText: "Enviar",
+        showCancelButton: true, 
+        cancelButtonText: "Cancelar",
+    }).then((result) => {
+        if(result.isConfirmed) {
+            const usuario = document.getElementById("usuario").value;
+            const password = document.getElementById("password").value;
+            console.log(usuario, password);
+            Swal.fire( {
+                title: "Datos enviados",
+                icon: "success", 
+                confirmButtonText: "Aceptar",
+            })
+
+            //Si quiero enviarte a otra página
+            if(usuario === usuarioAutorizado && password === passwordAutorizado) {
+                $linkLog.innerText = 'Hola ' + usuario.toString() + '!';
+                usu = usuario;
+            }
+        }
+    })
+})

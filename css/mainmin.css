@@ -116,6 +116,14 @@
     #linkCarro {
         right: 2rem;
     }
+
+    
+#linkLog{
+    position: absolute;
+    top: 1rem;
+    right: 120px;
+    cursor: pointer;
+}
 }
 
 
