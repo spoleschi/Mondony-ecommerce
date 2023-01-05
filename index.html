@@ -8,9 +8,7 @@
     <title>Mondony Ecommerce</title>
 
     <!-- Fontawesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="./css/bootstrap.min.css" />
@@ -30,10 +28,23 @@
 </head>
 <body>
     <nav class="navbar sticky-top navbar-expand-md navbar-light" id="menunav">
-        <a class="navbar-brand logo ml-5" href="./index.html"> 
+        <a class="navbar-brand logo ml-3" href="./index.html"> 
           <p class="logo1">Mondony</p>
           <p class="logo2">Muebles, arte y diseño</p>
         </a>
+
+        <form class="d-flex">
+          <!-- <button id="linkCarro" class="btn btn-outline-dark" type="submit" data-toggle="modal" data-target="#carritoModal">
+              <i class="bi-cart-fill me-1"></i>
+              Carro
+              <span id="cantCarrito" class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+          </button> -->
+          <a href="" id="linkCarro" class="btn btn-outline-dark"  data-toggle="modal" data-target="#carritoModal"  data-toggle="modal" data-target="#carritoModal">
+            <i class="bi-cart-fill me-1"></i>
+              <span id="cantCarrito" class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+          </a>
+        </form>
+
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -41,40 +52,51 @@
 
         <div class="collapse navbar-collapse mr-5" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-              <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
-              <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-              <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
-                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <li><a class="dropdown-item" href="#!">All Products</a></li>
-                      <li><hr class="dropdown-divider" /></li>
-                      <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-                      <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
-                  </ul>
+              <li class="nav-item active">
+                <a class="nav-link" href="./index.html">Home <span class="sr-only">(current)</span></a>
               </li>
-          </ul>
-          <form class="d-flex">
-              <!-- <button id="linkCarro" class="btn btn-outline-dark" type="submit">
-                  <i class="bi-cart-fill me-1"></i>
-                  Carro
-                  <span id="cantCarrito" class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-              </button> -->
-              <a href="#secCarro" id="linkCarro" class="btn btn-outline-dark">
-                <i class="bi-cart-fill me-1"></i>
-                Carro
-                <span id="cantCarrito" class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+
+              <!-- <li class="nav-item"><a class="nav-link" aria-current="page" href="#!" data-toggle="collapse" data-target="#navbarSupportedContent">Home</a></li> -->
+              
+              <li class="nav-item"><a class="nav-link" href="#!" data-toggle="collapse" data-target="#navbarSupportedContent">About</a></li>
+
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-toggle="dropdown" aria-expanded="false">Shop</a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="./index.html">All Products</a></li>
+                    <li><hr class="dropdown-divider" /></li>
+                    <li><button id="btnSillas" class="dropdown-item" href="#!">Sillas</button></li>
+                    <li><button id="btnBancos" class="dropdown-item" href="#!">Bancos</button></li>
+                    <li><button id="btnSofas" class="dropdown-item" href="#!">Sofás</button></li>
+                </ul>
+            </li>
+
+            <form class="d-flex ml-3" >
+              <a href="#usu" id="linkLog" class="btn btn-outline-dark">
+                <i class="bi bi-person-fill"> LogIn</i>
+                  <span  class="badge bg-dark text-white ms-1 rounded-pill"></span>
               </a>
-          </form>
+            </form>
+
+          </ul>
       </div>
+
     </nav>
 
     
     <div class="container">
-      <div class="contenedor" id="contenedor">
 
+      <h1 class= "text-center m-3">Tienda Mondony</h1>
+      <hr>
+
+      <!-- Filtro de productos -->
+      <div class="container">
+          <input type="text" id="formulario" class="form-control my-2" placeholder="Ingrese el tipo o nombre de producto">
       </div>
+      
+      <div class="contenedor mt-3 mb-5" id="contenedor"></div>
 
-      <!-- Modal -->
+      <!-- Modal para agregar productos -->
       <div class="modal fade" id="agregaProd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
@@ -97,7 +119,7 @@
         </div>
       </div>
 
-      <section id= "secCarro" class="formaPago mt-5 mb-5">
+      <!-- <section id= "secCarro" class="formaPago mt-5 mb-5">
         <h3 class="mb-4">Carrito de compras</h3>
 
         <table class="d-flex mt-2 mb-2">
@@ -107,12 +129,42 @@
         </table>
         
         <p><b> Total compra: <span id="total"></span> </b></p>
-        
-        <button id="vaciarCarrito" class="btn btn-secondary">Vaciar</button>
-      </section>
+        <div id="botonesCarrito">
+          <button id="vaciar" class="btn btn-secondary">Vaciar</button>
+          <button id="comprar" class="btn btn-secondary">Comprar</button>
+        </div>
+      </section> -->
 
-      <!-- Elementos del carrito -->
-      <ul id="carrito2" class="list-group"></ul>
+      <!-- Hago el carrito modal -->
+      <div class="modal" tabindex="-1" id="carritoModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Carrito de compras</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <section id= "secCarro" class="formaPago ">
+                <table class="d-flex mt-2 mb-2">
+                  <tbody id="carrito" >
+                  </tbody>
+                </table>
+                <p><b> Total compra: <span id="total"></span> </b></p>
+                <button id="vaciar" class="btn btn-secondary">Vaciar</button>
+              </section>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+              <button type="button" id="comprar" class="buttonBig btn-colorDark-colorLight2" data-dismiss="modal">Finalizar compra</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Carrito ul-->
+      <!-- <ul id="carrito2" class="list-group"></ul> -->
 
     </div>
 
@@ -163,6 +215,8 @@
       
       <!-- Toastify -->
       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+      <!-- SWEET ALERT -->
+      <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script src="./js/dom.js"></script>
 </body>

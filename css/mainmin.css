@@ -22,7 +22,13 @@
 }
 
 .card-img-top{
-    height: 300px;
+     max-height: 320px; 
+} 
+
+.contImg{
+    height: 320px; 
+    display: flex;
+    align-items: center;
 }
 
 .me-auto {
@@ -47,15 +53,6 @@
     display:none;
 }
 
-@media screen and (min-width: 992px){
-    .priority-5{
-        display:table-cell;
-    }
-    .priority-4{
-        display:table-cell;
-    }
-}
-
 /* @media screen and (max-width: 768px){
     .priority-5{
         display:none;
@@ -67,11 +64,82 @@
 
 #secCarro{
     margin: auto;
-    padding: 1rem;
+    padding: 0.5rem;
     display: inline-block;
     border: solid 1px black;
+    font-size: 14px;
 }
 
 #secCarro p{
     text-align:end;
+    padding: 0.5rem;
+}
+
+/* #botonesCarrito{
+    display: flex;
+    justify-content: space-between;
+} */
+
+.modal-content {
+    text-align: center;
+}
+
+.oculta{
+    display: none;
+}
+
+#linkCarro{
+    position: absolute;
+    top: 1rem;
+    right: 100px;
+    cursor: pointer;
+}
+
+
+@media screen and (min-width: 992px){
+    .priority-5{
+        display:table-cell;
+    }
+    .priority-4{
+        display:table-cell;
+    }
+    .modal-dialog {
+        max-width: 600px;
+    }
+    #secCarro{
+        font-size: 16px;
+    }
+}
+
+
+@media screen and (min-width: 768px){
+    #linkCarro {
+        right: 2rem;
+    }
+
+    
+#linkLog{
+    position: absolute;
+    top: 1rem;
+    right: 120px;
+    cursor: pointer;
+}
+}
+
+
+.form-control:focus {
+  color: #495057;
+  background-color: #fff;
+  border-color: #636568;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(11, 12, 14, 0.25);
+}
+
+
+.dropdown-menu button{
+    text-transform: uppercase;
+}
+
+#navbarSupportedContent button{
+    font-size: 0.8rem;
 }

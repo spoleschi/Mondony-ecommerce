@@ -2,12 +2,14 @@
 let totalCompras = 0;
 let arrayPedido = [];
 let articuloSelec = -1;
+let usulog;
 
 //Clases
 
 class Producto {
-    constructor(id, nombre, precio, imagen){
+    constructor(id, tipoMueble, nombre, precio, imagen){
         this.id = id;
+        this.tipoMueble = tipoMueble;
         this.nombre = nombre;
         this.precio = precio;
         this.imagen = imagen;
@@ -16,9 +18,9 @@ class Producto {
 }
 
 class Pedido {
-    constructor(idSilla, nombreSilla, cantidad, precio){
-        this.idSilla = idSilla;
-        this.nombreSilla = nombreSilla;
+    constructor(idProducto, nomproducto, cantidad, precio){
+        this.idProducto = idProducto;
+        this.nomproducto = nomproducto;
         this.cantidad = cantidad;
         this.precio = precio;
     }
@@ -28,72 +30,111 @@ class Pedido {
 function buscarIdx(valBus){
     let indice = -1
     arrayPedido.forEach((el,idx) => {
-        if (el.idSilla == valBus) indice = idx;
+        if (el.idProducto == valBus) indice = idx;
     })
     return indice
 }
 
-//Genero instancias de la clase producto con los distintos modelos de silla
+// Genero instancias de la clase producto con los distintos modelos de producto
 
-const silla01 = new Producto(1,'Wishbone',34000,'./images/Sillas/Wishbone.jpg');
-const silla02 = new Producto(2,'Kennedy',29000,'./images/Sillas/Kennedy.jpg');
-const silla03 = new Producto(3,'Moller',23000,'./images/Sillas/Moller.jpg');
-const silla04 = new Producto(4,'Ch20',25000,'./images/Sillas/Ch20Elbow.jpg');
-const silla05 = new Producto(5,'Grace',39000,'./images/Sillas/Grace.jpg');
-const silla06 = new Producto(6,'Febo',24000,'./images/Sillas/Febo.jpg');
+// const producto01 = new Producto(1,'Silla','Wishbone',24000,'./images/Sillas/Wishbone.jpg');
+// const producto02 = new Producto(2,'Silla','Kennedy',29000,'./images/Sillas/Kennedy.jpg');
+// const producto03 = new Producto(3,'Silla','Moller',23000,'./images/Sillas/Moller.jpg');
+// const producto04 = new Producto(4,'Silla','Ch20',25000,'./images/Sillas/Ch20Elbow.jpg');
+// const producto05 = new Producto(5,'Silla','Grace',39000,'./images/Sillas/Grace.jpg');
+// const producto06 = new Producto(6,'Silla','Febo',28000,'./images/Sillas/Febo.jpg');
 
-//Creo un array con los modelos de silla
-const sillas = [silla01, silla02,silla03, silla04,silla05, silla06]
+// Creo un array con los modelos de producto
+//const productos = [producto01, producto02,producto03, producto04,producto05, producto06]
 
-// Cargo las sillas a las cards de html
 
-//Si concateno con innerHTML no funciona el botón ¿?...
+//cargo productos desde json
 
-const contenedor = document.getElementById("contenedor");
+const bbdd = "json/productos.json";
+const productos = [];
 
-const cargarProductosMal = () => {
-    sillas.forEach(silla  => {
-        
-        contenedor.innerHTML += 
-                        `<div class="card m-3" style="width: 18rem;">
-                            <img src= ${silla.imagen} class="card-img-top" alt=" ${silla.nombre}">
-                            <div class="card-body">
-                                <h5 class="card-title"> ${silla.nombre}</h5>
-                                <p class="card-text">Precio: ${silla.precio}</p>
-                                <a href="#" id = "boton${silla.id}" class="buttonBig btn-colorDark-colorLight2"  data-toggle="modal" data-target="#agregaProd">Agreagar al carrito</a>
-                            </div>
-                        </div>`
-        const boton = document.getElementById(`boton${silla.id}`);
-        boton.addEventListener("click", () => {
-            console.log(silla.id);
-            articuloSelec = silla.id;
-        })
-
+fetch(bbdd)
+    .then((response) => response.json())
+    .then((data) => {
+        productos.push(...data);
+        cargarProductos();
     })
-}
+    .catch(error => console.error(error))
+
+
+// Cargo las productos a las cards de html
+
+
+//Creando el evento en el innerHTML
+// const cargarProductos2 = () => {
+//     productos.forEach(producto => {
+        
+//         contenedor.innerHTML += 
+//                         `<div class="card m-3" style="width: 18rem;">
+//                             <img src= ${producto.imagen} class="card-img-top" alt=" ${producto.nombre}">
+//                             <div class="card-body">
+//                                 <h5 class="card-title"> ${producto.nombre}</h5>
+//                                 <p class="card-text">Precio: ${producto.precio}</p>
+//                                 <button onclick="agregarProducto(${producto.id})" class="buttonBig btn-colorDark-colorLight2"  data-toggle="modal" data-target="#agregaProd">Agreagar al carrito</button>
+//                             </div>
+//                         </div>`
+//     })
+// }
+
+// function agregarProducto(id){
+//     console.log(id);
+//     articuloSelec = id;
+// }
+
+
+//Si concateno con innerHTML no funciona el botón, con appendChild si ¿?...
+// const cargarProductosMal = () => {
+//     productos.forEach(producto => {
+        
+//         contenedor.innerHTML += 
+//                         `<div class="card m-3" style="width: 18rem;">
+//                             <img src= ${producto.imagen} class="card-img-top" alt=" ${producto.nombre}">
+//                             <div class="card-body">
+//                                 <h5 class="card-title"> ${producto.nombre}</h5>
+//                                 <p class="card-text">Precio: ${producto.precio}</p>
+//                                 <a href="#" id = "boton${producto.id}" class="buttonBig btn-colorDark-colorLight2"  data-toggle="modal" data-target="#agregaProd">Agreagar al carrito</a>
+//                             </div>
+//                         </div>`
+//         const boton = document.getElementById(`boton${producto.id}`);
+//         boton.addEventListener("click", () => {
+//             console.log(producto.id);
+//             articuloSelec = producto.id;
+//         })
+
+//     })
+// }
+
 
 const cargarProductos = () => {
-    sillas.forEach(silla  => {
+    productos.forEach(producto => {
         const card = document.createElement("div");
+        card.classList.add("contProd");
         //card.classList.add("col-xl-3", "col-md-6", "col-xs-12");
         card.innerHTML = 
-                        `<div class="card m-3" style="width: 18rem;">
-                            <img src= ${silla.imagen} class="card-img-top" alt=" ${silla.nombre}">
+                        `<div class="card m-3" style="width: 20rem;">
+                            <div class = "contImg">
+                            <img src= ${producto.imagen} class="card-img-top" alt=" ${producto.nombre}">
+                            </div>
                             <div class="card-body">
-                                <h5 class="card-title"> ${silla.nombre}</h5>
-                                <p class="card-text">Precio: ${silla.precio}</p>
-                                <a href="#" id = "boton${silla.id}" class="buttonBig btn-colorDark-colorLight2"  data-toggle="modal" data-target="#agregaProd">Agreagar al carrito</a>
+                                <h5 class="card-title"> ${producto.nombre}</h5>
+                                <p class="card-text">Precio: ${new Intl.NumberFormat('es-AR', {style: 'currency',   currency: 'ARS',}).format(producto.precio)} </p>
+                                <a href="#" id = "boton${producto.id}" class="buttonBig btn-colorDark-colorLight2"  data-toggle="modal" data-target="#agregaProd">Agreagar al carrito</a>
                             </div>
                         </div>`
         contenedor.appendChild(card);
 
         //Agregar productos al carrito: 
 
-        const boton = document.getElementById(`boton${silla.id}`);
+        const boton = document.getElementById(`boton${producto.id}`);
         boton.addEventListener("click", () => {
             //agregarAlCarrito(producto.id)
-            console.log(silla.id);
-            articuloSelec = silla.id;
+            console.log(producto.id);
+            articuloSelec = producto.id;
         })
     })
 }
@@ -104,40 +145,79 @@ const limpiarCarrito = () => {
     calcularTotal();
 
     //localStorage: 
-    localStorage.clear();
-}
-
-
-function numberFormat(e) {
-    if (e.trim()=="" || e.trim()=="-") {
-        return;
-    }
- 
-    // Obtenemos un array con el numero y los decimales si hay
-    let contenido = e.replace(/[^0-9\.]/g, "").split(".");
- 
-    // añadimos los separadores de miles al primer numero del array
-    contenido[0] = contenido[0].length ? new Intl.NumberFormat('en-US').format(parseInt(contenido[0])) : "0";
- 
-    // Juntamos el numero con los decimales si hay decimales
-    let resultado=contenido.length>1 ? contenido.slice(0, 2).join(".") : contenido[0];
-    e=e[0]=="-" ? "-"+resultado : resultado;
+    localStorage.removeItem("carrito");
 }
 
 
 //Variables del DOM
+const contenedor = document.getElementById("contenedor");
 const $cant = document.getElementById("cant")
 const $sumaCant = document.getElementById("sumaCant")
 const $restaCant = document.getElementById("restaCant")
 const $agregaArt = document.getElementById("agregaArt")
 const $cantCarrito = document.getElementById("cantCarrito");
 const $carrito = document.getElementById("carrito");
-const $vaciar = document.querySelector('#vaciarCarrito');
+const $vaciar = document.querySelector('#vaciar');
+const $comprar = document.querySelector('#comprar');
 const $total = document.querySelector('#total');
+const $linkLog = document.getElementById("linkLog");
+
+const $btnSillas = document.querySelector('#btnSillas');
+const $btnBancos = document.querySelector('#btnBancos');
+const $btnSofas = document.querySelector('#btnSofas');
 
 $sumaCant.addEventListener("click",() => $cant.value = parseInt($cant.value) + 1 )
 $restaCant.addEventListener("click",() => parseInt($cant.value) > 1 ? $cant.value = parseInt($cant.value) - 1 : 1 )
 $vaciar.addEventListener('click',limpiarCarrito);
+
+// $comprar.addEventListener("click", () => {
+//     new swal("Good job!", "You clicked the button!", "success")
+// })
+
+
+let a = getComputedStyle($comprar).getPropertyValue("backGroudColor");
+let b = getComputedStyle($comprar).backgroundColor;
+
+
+$comprar.addEventListener("click", () => {
+    if (usulog == undefined){
+        // Swal.fire({
+        //     title: "No se ha logueado!",
+        //     text: "Debe loguearse para comprar",
+        //     icon: "success",
+        //     iconColor: "gray",
+        //     confirmButtonText: "Aceptar",
+        //     customClass:{confirmButton: 'buttonBig btn-colorLight-colorDarkv'}
+        // })
+
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            timer: 2000,
+            showConfirmButton: false,
+            text: 'Debe loguearse para comprar',
+          })
+
+        setTimeout( () => {
+            $linkLog.click();
+        }, 2000)
+    }
+    else
+    {
+        Swal.fire({
+            title: "Compra realizada!",
+            text: `Gracias por elegir Mondony Muebles, Arte y Diseño.`,
+            footer: `Recibirá un correo con la información de la compra en ${usulog.email}`,
+            icon: "success",
+            iconColor: "gray",
+            confirmButtonText: "Aceptar",
+            confirmButtonColor: "black",
+            customClass:{confirmButton: 'buttonBig btn-colorLight-colorDarkv'}
+        })
+        limpiarCarrito();
+    }
+
+})
 
 $agregaArt.onclick = () => {
     
@@ -158,37 +238,67 @@ $agregaArt.onclick = () => {
 
 const mostrarCarrito = () => {
     
-    $carrito.innerHTML = `<tr>
-                            <th class="priority-4">Id</th>
-                            <th>Desc.</th>
-                            <th>Cant.</th>
-                            <th class="priority-5">Precio</th>
-                            <th>Total</th>
-                            <th>Quitar</th>
-                        </tr>`
+    if (arrayPedido.length === 0)
+    {
+        $carrito.innerHTML = `<p><b> El carrito se encuentra vacío </b></p>`
+                
+        //Oculto modificando valor de propiedad dysplay:
+        $vaciar.style.setProperty("display","none");
+        //$comprar.style.setProperty("display","none");
+        
+        //Lo mismo pero con notación punto:
+        //$comprar.style.display = "none";
+        
+        //Lo oculto agregando clase CSS
+        $comprar.classList.add("oculta");
 
-    arrayPedido.forEach((el) => {
-        const fila = document.createElement("tr");
+        // console.log(getComputedStyle($vaciar).display);
+        // console.log($vaciar.style);
+        // console.log($vaciar.getAttribute("style"));
+    }
+    else
+    {   
+        $vaciar.style.setProperty("display","inline-block");
+        $comprar.classList.remove("oculta");
 
-        fila.innerHTML =`<td class="priority-4" >${el.idSilla}</td>
-                        <td>${el.nombreSilla}</td>
-                        <td>${el.cantidad}</td>
-                        <td class="priority-5">${new Intl.NumberFormat().format(el.precio)}</td>
-                        <td>${new Intl.NumberFormat().format(el.precio * el.cantidad)}</td>`
-        // Boton de borrar
-        const colBoton = document.createElement('td');
-        colBoton.style.textAlign = 'center';
-        const miBoton = document.createElement('button');
-        miBoton.classList.add('btn', 'btn-outline-secondary');
-        miBoton.textContent = 'X';
-        miBoton.dataset.item = el.idSilla;
-        miBoton.addEventListener('click', borrarItemCarrito);
-        colBoton.appendChild(miBoton);
-        fila.appendChild(colBoton);
-        $carrito.appendChild(fila);
+        $carrito.innerHTML = `<tr>
+                                <th class="priority-4">Id</th>
+                                <th>Desc.</th>
+                                <th>Cant.</th>
+                                <th class="priority-5">Precio</th>
+                                <th>Total</th>
+                                <th>Quitar</th>
+                            </tr>`
 
-    })
-    calcularTotal();
+        arrayPedido.forEach((el) => {
+
+            //Desestructuración
+            const {idProducto, nomproducto, cantidad, precio} = el;
+
+            const fila = document.createElement("tr");
+
+            fila.innerHTML =`<td class="priority-4" >${idProducto}</td>
+                            <td>${nomproducto}</td>
+                            <td>${cantidad}</td>
+                            <td class="priority-5">${new Intl.NumberFormat().format(precio)}</td>
+                            <td>${new Intl.NumberFormat().format(precio * cantidad)}</td>`
+            // Boton de borrar
+            const colBoton = document.createElement('td');
+            colBoton.style.textAlign = 'center';
+            const miBoton = document.createElement('button');
+            miBoton.classList.add('btn', 'btn-outline-secondary');
+            miBoton.textContent = 'X';
+            //Utilizo un data-attribute...
+            //miBoton.setAttribute("item",el.idProducto);
+            miBoton.dataset.item = idProducto;
+            miBoton.addEventListener('click', borrarItemCarrito);
+            colBoton.appendChild(miBoton);
+            fila.appendChild(colBoton);
+            $carrito.appendChild(fila);
+
+        })
+        calcularTotal();
+    }
 }
 
 function mostrarCarritoEnLi() {
@@ -197,13 +307,13 @@ function mostrarCarritoEnLi() {
 
         const miNodo = document.createElement('li');
         miNodo.classList.add('list-group-item', 'text-right', 'mx-2');
-        miNodo.textContent = `${item.cantidad} x ${item.nombreSilla} - $ ${item.precio}`;
+        miNodo.textContent = `${item.cantidad} x ${item.nomproducto} - $ ${item.precio}`;
         // Boton de borrar
         const miBoton = document.createElement('button');
         miBoton.classList.add('btn', 'btn-danger', 'mx-5');
         miBoton.textContent = 'X';
         miBoton.style.marginLeft = '1rem';
-        miBoton.dataset.item = item.idSilla;
+        miBoton.dataset.item = item.idProducto;
         miBoton.addEventListener('click', borrarItemCarrito);
         // Mezclamos nodos
         miNodo.appendChild(miBoton);
@@ -216,9 +326,9 @@ function mostrarCarritoEnLi() {
 
 let agregarProd = () => {
 
-    let proSelec = sillas.find(el => el.id == articuloSelec);
+    let proSelec = productos.find(el => el.id == articuloSelec);
 
-    let idx = arrayPedido.findIndex(el => el.idSilla === proSelec.id);
+    let idx = arrayPedido.findIndex(el => el.idProducto === proSelec.id);
                     
     if (idx > -1) {
         arrayPedido[idx].cantidad += Number($cant.value);
@@ -228,7 +338,7 @@ let agregarProd = () => {
     }
 
     //totalCompras +=  proSelec.precio * Number($cant.value);    
-    console.log(`Agregamos al carrito ${$cant.value} unidad/es de la silla: ${proSelec.nombre}`);
+    console.log(`Agregamos al carrito ${$cant.value} unidad/es de la producto: ${proSelec.nombre}`);
     console.log(arrayPedido);
 
     localStorage.setItem("carrito", JSON.stringify(arrayPedido));
@@ -241,21 +351,21 @@ function borrarItemCarrito(evento) {
     // Obtengo el producto ID que hay en el boton pulsado
     const id = evento.target.dataset.item;
 
-    // let pedSelec = arrayPedido.find(el => el.idSilla == id);
+    // let pedSelec = arrayPedido.find(el => el.idProducto == id);
     // let indexSelec = arrayPedido.indexOf(pedSelec);
     // arrayPedido.splice(indexSelec, 1);
 
     //Lo hago más fácil con filter (ya que defino arrayPedido con let por uso de localStorage)...
     arrayPedido = arrayPedido.filter((el) => {
-        return el.idSilla !== Number(id);
+        return el.idProducto !== Number(id);
     });
     
     //totalCompras -=  pedSelec.precio * pedSelec.cantidad;
     
     //localStorage: 
     localStorage.setItem("carrito", JSON.stringify(arrayPedido));
-      
     mostrarCarrito();   
+    calcularTotal();
     //mostrarCarritoEnLi();
 }
 
@@ -265,15 +375,256 @@ function calcularTotal()
     arrayPedido.forEach(element => {
         totalCompras += element.cantidad * element.precio;
     });
-    $total.innerText = new Intl.NumberFormat('en-US', {style: 'currency',   currency: 'USD',}).format(totalCompras);
+    $total.innerText = new Intl.NumberFormat('es-AR', {style: 'currency',   currency: 'ARS',}).format(totalCompras);
     
     $cantCarrito.innerText = arrayPedido.length.toString();
 }
 
 // Inicio
-if(localStorage.getItem("carrito")) {
-    arrayPedido = JSON.parse(localStorage.getItem("carrito"));
+
+//Cargo carrito desde Local Storage
+// if(localStorage.getItem("carrito")) {
+//     arrayPedido = JSON.parse(localStorage.getItem("carrito"));
+// }
+
+//Utilizo operador OR
+// arrayPedido = JSON.parse(localStorage.getItem("carrito")) || []
+
+
+//Utilizo operador NULLISH
+arrayPedido = JSON.parse(localStorage.getItem("carrito")) ?? []
+usulog = JSON.parse(localStorage.getItem("usuario")) ?? undefined
+if(usulog !== undefined) {
+    $linkLog.innerText = 'Hola ' + usulog.firstName + '!';
 }
+
+
 calcularTotal();
-cargarProductos();
+// cargarProductos();
 mostrarCarrito();
+
+
+//Filtro
+
+const $formulario = document.getElementById("formulario");
+
+const filtrar = () =>{
+
+    contenedor.innerHTML = '';
+    
+    const texto = $formulario.value.toLowerCase();
+    for ( let producto of productos ){
+        let nombre= producto.nombre.toLowerCase() + producto.tipoMueble.toLowerCase();
+
+        if ( nombre.indexOf(texto) !== -1){
+            //cargarProductos()
+            const card = document.createElement("div");
+            card.classList.add("contProd");
+            //card.classList.add("col-xl-3", "col-md-6", "col-xs-12");
+            card.innerHTML = 
+                            `<div class="card m-3" style="width: 20rem;">
+                                <div class = "contImg">
+                                <img src= ${producto.imagen} class="card-img-top" alt=" ${producto.nombre}">
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title"> ${producto.nombre}</h5>
+                                    <p class="card-text">Precio: ${new Intl.NumberFormat('es-AR', {style: 'currency',   currency: 'ARS',}).format(producto.precio)} </p>
+                                    <a href="#" id = "boton${producto.id}" class="buttonBig btn-colorDark-colorLight2"  data-toggle="modal" data-target="#agregaProd">Agreagar al carrito</a>
+                                </div>
+                            </div>`
+            contenedor.appendChild(card);
+
+            //Agregar productos al carrito: 
+
+            const boton = document.getElementById(`boton${producto.id}`);
+            boton.addEventListener("click", () => {
+                //agregarAlCarrito(producto.id)
+                console.log(producto.id);
+                articuloSelec = producto.id;
+            })
+                
+        }
+
+    }
+    if ( contenedor.innerHTML === '' ){
+        contenedor.innerHTML = `<li>Producto no encontrado</li>`
+    }
+
+}
+
+
+$formulario.addEventListener('keyup', filtrar);
+
+$btnSillas.addEventListener('click',() => {
+    $formulario.value = "silla";
+    filtrar();
+    $formulario.value = "";
+    } 
+);
+
+$btnBancos.addEventListener('click',() => {
+    $formulario.value = "banco";
+    filtrar();
+    $formulario.value = "";
+    } 
+);
+
+$btnSofas.addEventListener('click',() => {
+    $formulario.value = "sofa";
+    filtrar();
+    $formulario.value = "";
+    } 
+);
+
+
+// Login
+
+async function obtenerUsuario(usu, pass) {
+  const respuesta = await fetch('https://dummyjson.com/users')
+  const datos = await respuesta.json();
+  const user = datos.users.find(e => e.username === usu && e.password === pass);
+  return user;
+}
+
+linkLog.addEventListener("click", () => {
+    (usulog !== undefined) ? logout() : login();
+})
+
+function logout(){
+
+    Swal.fire({
+        title: 'Cerrar sesión?',
+        iconColor: "gray",
+        text: "Desea cerrar su sesión de usuario?",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: 'black',
+        confirmButtonText: 'Logout'
+      }).then((result) => {
+        if (result.isConfirmed) {
+            usulog = undefined;
+            localStorage.removeItem("usuario");
+            $linkLog.innerHTML= '<i class="bi bi-person-fill"> LogIn</i> <span  class="badge bg-dark text-white ms-1 rounded-pill"></span>'
+            Swal.fire({
+                title: 'Sesión cerrada!',
+                iconColor: "gray",
+                confirmButtonColor: 'black',
+                text: 'Ha cerrado su sesión de usuario',
+                icon: 'success'
+            })
+        }
+      })
+}
+
+function login (){
+    Swal.fire( {
+        title: "Login",
+        html: `<input type ="text" id="usuario" class="swal2-input" style="width: 95%; margin: 1rem 0.1rem" placeholder ="Usuario">
+                <input type ="password" id="password" class="swal2-input" style="width: 95%; margin: 0.1rem" placeholder ="Password">`,
+        confirmButtonText: "Ingresar",
+        confirmButtonColor: "black",
+        showCancelButton: true, 
+        cancelButtonText: "Cancelar",
+    }).then((result) => {
+        if(result.isConfirmed) {
+            const usuario = document.getElementById("usuario").value;
+            const password = document.getElementById("password").value;
+            console.log(usuario, password);
+            
+            obtenerUsuario(document.getElementById("usuario").value,document.getElementById("password").value)
+                .then(function(resultado) {
+                    usulog = resultado;
+                });
+            
+
+            //Si quiero enviarte a otra página
+            //if(usuario === usuarioAutorizado && password === passwordAutorizado) {
+
+            setTimeout( () => {
+                if(usulog) {
+                    $linkLog.innerText = 'Hola ' + usulog.firstName + '!';
+                    localStorage.setItem("usuario", JSON.stringify(usulog));
+                    // Swal.fire( {
+                    //     title: "Se ha logueado exitosamente",
+                    //     icon: "success", 
+                    //     confirmButtonText: "Aceptar",
+                    // })
+                }
+                else{
+                    Swal.fire( {
+                        iconColor: "gray",
+                        title: "Usuario inválido",
+                        icon: "error", 
+                        confirmButtonText: "Aceptar",
+                        confirmButtonColor: "Black",
+                    })
+                }
+            }, 800)
+          
+        }
+    })
+}
+
+
+// // Obtiene el elemento del DOM con el ID "linkLog"
+// const $linkLog = document.getElementById("linkLog");
+
+// // Declara una variable para almacenar el usuario que ha iniciado sesión
+// let usulog;
+
+// // Declara una función asíncrona que envía una solicitud a la URL especificada y devuelve el elemento del usuario que cumpla con las condiciones especificadas
+// async function obtenerUsuario(usu, pass) {
+//   // Envía una solicitud GET a la URL especificada y obtiene la respuesta
+//   const respuesta = await fetch('https://dummyjson.com/users')
+//   // Convierte la respuesta a un objeto JSON
+//   const datos = await respuesta.json();
+//   // Busca un elemento en el array "datos.users" que tenga el nombre de usuario y la contraseña especificadas
+//   const user = datos.users.find(e => e.username === usu && e.password === pass);
+//   // Devuelve el elemento encontrado o undefined si no se encuentra ningún elemento
+//   return user;
+// }
+
+// // Agrega un manejador de eventos al elemento "linkLog" que se activa al hacer clic en él
+// linkLog.addEventListener("click", () => {
+//     // Muestra un cuadro de diálogo de SweetAlert2 con un formulario de inicio de sesión
+//     Swal.fire( {
+//         title: "Login",
+//         html: `<input type ="text" id="usuario" class="swal2-input" style="width: 95%; margin: 1rem 0.1rem" placeholder ="Usuario">
+//                 <input type ="password" id="password" class="swal2-input" style="width: 95%; margin: 0.1rem" placeholder ="Password">`,
+//         confirmButtonText: "Enviar",
+//         showCancelButton: true, 
+//         cancelButtonText: "Cancelar",
+//     }).then((result) => {
+//         // Si el usuario hace clic en el botón "Enviar"
+//         if(result.isConfirmed) {
+//             // Obtiene el valor ingresado por el usuario en el formulario de inicio de sesión
+//             const usuario = document.getElementById("usuario").value;
+//             const password = document.getElementById("password").value;
+//             console.log(usuario, password);
+            
+//             // Llama a la función "obtenerUsuario" y almacena el resultado en la variable "usulog"
+//             obtenerUsuario(usuario, password).then(resultado => {
+//                 usulog = resultado;
+//             });
+
+//             // Verifica si se ha encontrado un usuario válido
+//             if(usulog) {
+//                 $linkLog.innerText = 'Hola ' + usulog.username + '!';
+//                 // Muestra una alerta de SweetAlert2 para indicar que el inicio de sesión se ha realizado con éxito
+//                 Swal.fire( {
+//                     title: "Se ha logueado exitosamente",
+//                     icon: "success", 
+//                     confirmButtonText: "Aceptar",
+//                 })
+//             }
+//             else {
+//                 // Muestra una alerta de error de SweetAlert2 si no se ha encontrado un usuario válido
+//                 Swal.fire( {
+//                     title: "Usuario inválido",
+//                     icon: "error", 
+//                     confirmButtonText: "Aceptar",
+//                 })
+//             }
+//         }
+//     })
+// })
