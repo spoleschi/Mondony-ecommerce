@@ -2,6 +2,7 @@
 let totalCompras = 0;
 let arrayPedido = [];
 let articuloSelec = -1;
+let usulog;
 
 //Clases
 
@@ -49,15 +50,14 @@ function buscarIdx(valBus){
 
 //cargo productos desde json
 
-const BBDD = "json/productos.json";
+const bbdd = "json/productos.json";
 const productos = [];
 
-fetch(BBDD)
+fetch(bbdd)
     .then((response) => response.json())
     .then((data) => {
         productos.push(...data);
         cargarProductos();
-        //pintarBurgers(productos);
     })
     .catch(error => console.error(error))
 
@@ -145,7 +145,7 @@ const limpiarCarrito = () => {
     calcularTotal();
 
     //localStorage: 
-    localStorage.clear();
+    localStorage.removeItem("carrito");
 }
 
 
@@ -160,6 +160,7 @@ const $carrito = document.getElementById("carrito");
 const $vaciar = document.querySelector('#vaciar');
 const $comprar = document.querySelector('#comprar');
 const $total = document.querySelector('#total');
+const $linkLog = document.getElementById("linkLog");
 
 const $btnSillas = document.querySelector('#btnSillas');
 const $btnBancos = document.querySelector('#btnBancos');
@@ -173,15 +174,13 @@ $vaciar.addEventListener('click',limpiarCarrito);
 //     new swal("Good job!", "You clicked the button!", "success")
 // })
 
-console.log($comprar.style);
 
-console.log(getComputedStyle($comprar));
 let a = getComputedStyle($comprar).getPropertyValue("backGroudColor");
 let b = getComputedStyle($comprar).backgroundColor;
-console.log(a);
+
 
 $comprar.addEventListener("click", () => {
-    if (usu == undefined){
+    if (usulog == undefined){
         // Swal.fire({
         //     title: "No se ha logueado!",
         //     text: "Debe loguearse para comprar",
@@ -207,10 +206,12 @@ $comprar.addEventListener("click", () => {
     {
         Swal.fire({
             title: "Compra realizada!",
-            text: "Gracias por elegir Mondony Muebles, Arte y Diseño",
+            text: `Gracias por elegir Mondony Muebles, Arte y Diseño.`,
+            footer: `Recibirá un correo con la información de la compra en ${usulog.email}`,
             icon: "success",
             iconColor: "gray",
             confirmButtonText: "Aceptar",
+            confirmButtonColor: "black",
             customClass:{confirmButton: 'buttonBig btn-colorLight-colorDarkv'}
         })
         limpiarCarrito();
@@ -392,6 +393,11 @@ function calcularTotal()
 
 //Utilizo operador NULLISH
 arrayPedido = JSON.parse(localStorage.getItem("carrito")) ?? []
+usulog = JSON.parse(localStorage.getItem("usuario")) ?? undefined
+if(usulog !== undefined) {
+    $linkLog.innerText = 'Hola ' + usulog.firstName + '!';
+}
+
 
 calcularTotal();
 // cargarProductos();
@@ -471,22 +477,52 @@ $btnSofas.addEventListener('click',() => {
 );
 
 
-//Login
+// Login
 
-
-const $linkLog = document.getElementById("linkLog");
-
-const usuarioAutorizado = "bobo";
-const passwordAutorizado = "1234";
-
-let usu;
+async function obtenerUsuario(usu, pass) {
+  const respuesta = await fetch('https://dummyjson.com/users')
+  const datos = await respuesta.json();
+  const user = datos.users.find(e => e.username === usu && e.password === pass);
+  return user;
+}
 
 linkLog.addEventListener("click", () => {
+    (usulog !== undefined) ? logout() : login();
+})
+
+function logout(){
+
+    Swal.fire({
+        title: 'Cerrar sesión?',
+        iconColor: "gray",
+        text: "Desea cerrar su sesión de usuario?",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: 'black',
+        confirmButtonText: 'Logout'
+      }).then((result) => {
+        if (result.isConfirmed) {
+            usulog = undefined;
+            localStorage.removeItem("usuario");
+            $linkLog.innerHTML= '<i class="bi bi-person-fill"> LogIn</i> <span  class="badge bg-dark text-white ms-1 rounded-pill"></span>'
+            Swal.fire({
+                title: 'Sesión cerrada!',
+                iconColor: "gray",
+                confirmButtonColor: 'black',
+                text: 'Ha cerrado su sesión de usuario',
+                icon: 'success'
+            })
+        }
+      })
+}
+
+function login (){
     Swal.fire( {
         title: "Login",
         html: `<input type ="text" id="usuario" class="swal2-input" style="width: 95%; margin: 1rem 0.1rem" placeholder ="Usuario">
-                <input type ="text" id="password" class="swal2-input" style="width: 95%; margin: 0.1rem" placeholder ="Password">`,
-        confirmButtonText: "Enviar",
+                <input type ="password" id="password" class="swal2-input" style="width: 95%; margin: 0.1rem" placeholder ="Password">`,
+        confirmButtonText: "Ingresar",
+        confirmButtonColor: "black",
         showCancelButton: true, 
         cancelButtonText: "Cancelar",
     }).then((result) => {
@@ -494,17 +530,101 @@ linkLog.addEventListener("click", () => {
             const usuario = document.getElementById("usuario").value;
             const password = document.getElementById("password").value;
             console.log(usuario, password);
-            Swal.fire( {
-                title: "Datos enviados",
-                icon: "success", 
-                confirmButtonText: "Aceptar",
-            })
+            
+            obtenerUsuario(document.getElementById("usuario").value,document.getElementById("password").value)
+                .then(function(resultado) {
+                    usulog = resultado;
+                });
+            
 
             //Si quiero enviarte a otra página
-            if(usuario === usuarioAutorizado && password === passwordAutorizado) {
-                $linkLog.innerText = 'Hola ' + usuario.toString() + '!';
-                usu = usuario;
-            }
+            //if(usuario === usuarioAutorizado && password === passwordAutorizado) {
+
+            setTimeout( () => {
+                if(usulog) {
+                    $linkLog.innerText = 'Hola ' + usulog.firstName + '!';
+                    localStorage.setItem("usuario", JSON.stringify(usulog));
+                    // Swal.fire( {
+                    //     title: "Se ha logueado exitosamente",
+                    //     icon: "success", 
+                    //     confirmButtonText: "Aceptar",
+                    // })
+                }
+                else{
+                    Swal.fire( {
+                        iconColor: "gray",
+                        title: "Usuario inválido",
+                        icon: "error", 
+                        confirmButtonText: "Aceptar",
+                        confirmButtonColor: "Black",
+                    })
+                }
+            }, 800)
+          
         }
     })
-})
+}
+
+
+// // Obtiene el elemento del DOM con el ID "linkLog"
+// const $linkLog = document.getElementById("linkLog");
+
+// // Declara una variable para almacenar el usuario que ha iniciado sesión
+// let usulog;
+
+// // Declara una función asíncrona que envía una solicitud a la URL especificada y devuelve el elemento del usuario que cumpla con las condiciones especificadas
+// async function obtenerUsuario(usu, pass) {
+//   // Envía una solicitud GET a la URL especificada y obtiene la respuesta
+//   const respuesta = await fetch('https://dummyjson.com/users')
+//   // Convierte la respuesta a un objeto JSON
+//   const datos = await respuesta.json();
+//   // Busca un elemento en el array "datos.users" que tenga el nombre de usuario y la contraseña especificadas
+//   const user = datos.users.find(e => e.username === usu && e.password === pass);
+//   // Devuelve el elemento encontrado o undefined si no se encuentra ningún elemento
+//   return user;
+// }
+
+// // Agrega un manejador de eventos al elemento "linkLog" que se activa al hacer clic en él
+// linkLog.addEventListener("click", () => {
+//     // Muestra un cuadro de diálogo de SweetAlert2 con un formulario de inicio de sesión
+//     Swal.fire( {
+//         title: "Login",
+//         html: `<input type ="text" id="usuario" class="swal2-input" style="width: 95%; margin: 1rem 0.1rem" placeholder ="Usuario">
+//                 <input type ="password" id="password" class="swal2-input" style="width: 95%; margin: 0.1rem" placeholder ="Password">`,
+//         confirmButtonText: "Enviar",
+//         showCancelButton: true, 
+//         cancelButtonText: "Cancelar",
+//     }).then((result) => {
+//         // Si el usuario hace clic en el botón "Enviar"
+//         if(result.isConfirmed) {
+//             // Obtiene el valor ingresado por el usuario en el formulario de inicio de sesión
+//             const usuario = document.getElementById("usuario").value;
+//             const password = document.getElementById("password").value;
+//             console.log(usuario, password);
+            
+//             // Llama a la función "obtenerUsuario" y almacena el resultado en la variable "usulog"
+//             obtenerUsuario(usuario, password).then(resultado => {
+//                 usulog = resultado;
+//             });
+
+//             // Verifica si se ha encontrado un usuario válido
+//             if(usulog) {
+//                 $linkLog.innerText = 'Hola ' + usulog.username + '!';
+//                 // Muestra una alerta de SweetAlert2 para indicar que el inicio de sesión se ha realizado con éxito
+//                 Swal.fire( {
+//                     title: "Se ha logueado exitosamente",
+//                     icon: "success", 
+//                     confirmButtonText: "Aceptar",
+//                 })
+//             }
+//             else {
+//                 // Muestra una alerta de error de SweetAlert2 si no se ha encontrado un usuario válido
+//                 Swal.fire( {
+//                     title: "Usuario inválido",
+//                     icon: "error", 
+//                     confirmButtonText: "Aceptar",
+//                 })
+//             }
+//         }
+//     })
+// })
