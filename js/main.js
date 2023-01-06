@@ -446,15 +446,15 @@ $btnSillas.addEventListener('click',() => {
     } 
 );
 
-$btnSillas.addEventListener('click',() => {
-    $buscador.value = "silla";
+$btnBancos.addEventListener('click',() => {
+    $buscador.value = "banco";
     buscar();
     $buscador.value = "";
     } 
 );
 
-$btnSillas.addEventListener('click',() => {
-    $buscador.value = "silla";
+$btnSofas.addEventListener('click',() => {
+    $buscador.value = "sofa";
     buscar();
     $buscador.value = "";
     } 
@@ -477,9 +477,9 @@ linkLog.addEventListener("click", () => {
 function logout(){
 
     Swal.fire({
-        title: 'Cerrar sesión?',
+        title: 'Cerrar sesión',
         iconColor: "gray",
-        text: "Desea cerrar su sesión de usuario?",
+        text: "¿Desea cerrar su sesión de usuario?",
         icon: 'question',
         showCancelButton: true,
         confirmButtonColor: 'black',
@@ -490,10 +490,10 @@ function logout(){
             localStorage.removeItem("usuario");
             $linkLog.innerHTML= '<i class="bi bi-person-fill"> LogIn</i> <span  class="badge bg-dark text-white ms-1 rounded-pill"></span>'
             Swal.fire({
-                title: 'Sesión cerrada!',
+                title: '¡Sesión cerrada!',
                 iconColor: "gray",
                 confirmButtonColor: 'black',
-                text: 'Ha cerrado su sesión de usuario',
+                text: 'Ha cerrado su sesión de usuario.',
                 icon: 'success'
             })
         }
