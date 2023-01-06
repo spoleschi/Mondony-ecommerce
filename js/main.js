@@ -166,6 +166,7 @@ const $linkLog = document.getElementById("linkLog");
 const $btnSillas = document.querySelector('#btnSillas');
 const $btnBancos = document.querySelector('#btnBancos');
 const $btnSofas = document.querySelector('#btnSofas');
+const $buscador = document.getElementById("buscador");
 
 //--------------------------------------------------------------------------------------//
 
@@ -391,8 +392,6 @@ mostrarCarrito();
 
 //------------------------------------ FILTRO ------------------------------------------//
 
-const $buscador = document.getElementById("buscador");
-
 const buscar = () =>{
 
     contenedor.innerHTML = '';
@@ -493,6 +492,7 @@ function logout(){
                 title: '¡Sesión cerrada!',
                 iconColor: "gray",
                 confirmButtonColor: 'black',
+                timer: 2000,
                 text: 'Ha cerrado su sesión de usuario.',
                 icon: 'success'
             })
@@ -518,33 +518,31 @@ function login (){
             obtenerUsuario(document.getElementById("usuario").value,document.getElementById("password").value)
                 .then(function(resultado) {
                     usulog = resultado;
-                });
-            
-
-            //Si quiero enviarte a otra página
-            //if(usuario === usuarioAutorizado && password === passwordAutorizado) {
-
-            setTimeout( () => {
-                if(usulog) {
+                }).then (()=> {if(usulog) {
                     $linkLog.innerText = 'Hola ' + usulog.firstName + '!';
                     localStorage.setItem("usuario", JSON.stringify(usulog));
-                    // Swal.fire( {
-                    //     title: "Se ha logueado exitosamente",
-                    //     icon: "success", 
-                    //     confirmButtonText: "Aceptar",
-                    // })
+                    Swal.fire( {
+                        title: "Se ha logueado exitosamente",
+                        icon: "success", 
+                        timer: 2000,
+                        iconColor: "gray",
+                        confirmButtonText: "Ok",
+                        confirmButtonColor: "Black"
+                    })
                 }
                 else{
                     Swal.fire( {
                         iconColor: "gray",
                         title: "Usuario inválido",
                         icon: "error", 
-                        confirmButtonText: "Aceptar",
-                        confirmButtonColor: "Black",
+                        confirmButtonText: "Ok",
+                        confirmButtonColor: "Black"
+                        // usulog = null;
                     })
                 }
-            }, 1000)
-          
+
+            });
+            
         }
     })
 }
