@@ -248,11 +248,11 @@ const mostrarCarrito = () => {
         $comprar.classList.remove("oculta");
 
         $carrito.innerHTML = `<tr>
-                                <th class="priority-4">Id</th>
+                                <!-- <th class="priority-4">Id</th> -->
                                 <th>Desc.</th>
                                 <th>Cant.</th>
                                 <th class="priority-5">Precio</th>
-                                <th>Total</th>
+                                <th>Subtotal</th>
                                 <th>Quitar</th>
                             </tr>`
 
@@ -263,12 +263,12 @@ const mostrarCarrito = () => {
 
             const fila = document.createElement("tr");
 
-            fila.innerHTML =`<td class="priority-4" >${idProducto}</td>
+            fila.innerHTML =`<!-- <td class="priority-4" >${idProducto}</td> -->
                             <td>${nomproducto}</td>
                             <td>${cantidad}</td>
                             <td class="priority-5">${new Intl.NumberFormat().format(precio)}</td>
                             <td>${new Intl.NumberFormat().format(precio * cantidad)}</td>`
-            // Boton de borrar
+            // // Boton de borrar
             const colBoton = document.createElement('td');
             colBoton.style.textAlign = 'center';
             const miBoton = document.createElement('button');
@@ -281,7 +281,6 @@ const mostrarCarrito = () => {
             colBoton.appendChild(miBoton);
             fila.appendChild(colBoton);
             $carrito.appendChild(fila);
-
         })
         calcularTotal();
     }
@@ -438,7 +437,6 @@ const buscar = () =>{
 
 }
 
-
 $buscador.addEventListener('keyup', buscar);
 
 $btnSillas.addEventListener('click',() => {
@@ -545,7 +543,7 @@ function login (){
                         confirmButtonColor: "Black",
                     })
                 }
-            }, 800)
+            }, 1000)
           
         }
     })

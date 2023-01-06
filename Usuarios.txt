@@ -1,0 +1,6 @@
+Algunos de los usuarios que devuleve la la API:
+"https://dummyjson.com/users"
+
+"username":"atuny0","password":"9uQFF1Lh
+"username":"acharlota","password":"M9lbMdydMN"
+"username":"dpierrof","password":"Vru55Y4tufI4"
