@@ -1,0 +1,45 @@
+/*COLORES*/
+$colorDark: black;
+$colorLight: #fff;
+$colorLight2: #e2e6ea;
+$colorGray: gray;
+$colorLightGray: #cccccc;
+$colorStrongGray: rgba(34, 35, 37, 0.85);
+
+/*FUENTES*/
+$fontPri: 'Montserrat', 'sans-serif';
+$fontBlack: 'MontserratBold', 'sans-serif';
+
+/*TAMAÑO FUENTE*/
+$fontXSmall: 0.8rem;
+$fontSmall: 1rem;
+$fontMedium: 1.6rem;
+$fontLarge: 2rem;
+$fontXLarge: 2.5rem;
+$fontXXLarge: 3rem;
+
+/*ESPACIADOS*/
+$xSmall: 0.3rem;
+$small: 0.5rem;
+$medium: 1rem;
+$large: 1.5rem;
+$xLarge: 2rem;
+
+/*Mapa de redes*/
+$ColoresRedes:(
+colorFb:#3b5998,
+colorIg:radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%),
+colorWa:#4dc247,
+);
+
+/*Mapas de colores*/
+$coloresOscuros:(
+colorDark: black,
+colorStrongGray: rgba(34, 35, 37, 0.85),
+);
+
+$coloresClaros:(
+colorLight: #fff,
+colorLight2: #e2e6ea,
+colorLightGray: #cccccc,
+);

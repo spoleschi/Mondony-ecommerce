@@ -1,0 +1,118 @@
+//La saco para probar API de google
+// @font-face {
+//     font-family: Montserrat;
+//     src: url(../fonts/Montserrat-Regular.ttf);
+//     font-display: swap;
+// }
+
+@font-face {
+    font-family: MontserratBold;
+    src: url(../fonts/Montserrat-Bold.ttf);
+    font-display: swap;
+}
+
+*::after,
+*::before,
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; 
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+body{
+    font-family: 'Montserrat', sans-serif; 
+}
+
+h1 {
+	font-size: $fontLarge;
+    font-weight: 700;
+}
+
+h2 {
+	font-size: $fontMedium;
+    font-family: $fontBlack;
+}
+
+h3 {
+	font-size: $fontMedium;
+}
+
+a{
+    &:hover{
+        text-decoration: none;
+    }
+}
+
+.button {
+    display: inline-block;
+    padding: 0 $xSmall;
+    font-size: $fontSmall;
+    line-height: 1.5;
+    color: $colorDark;
+    background-color: $colorLight;
+    border: 1px solid $colorStrongGray;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+    &:hover{
+        background-color: $colorStrongGray;
+        color: $colorLight2;
+        border-color: $colorLight2;
+    }
+    &:focus{
+        color: $colorDark;
+        background-color: $colorLightGray;
+        border-color: $colorLight2;
+        box-shadow: 0 0 0 0.2rem rgba(216, 217, 219, 0.5);
+    }
+}
+
+.buttonBig{
+    padding: $xSmall $medium;
+}
+
+.tabla {
+	th {
+		background-color: $colorGray;
+		color: $colorLight;
+		letter-spacing: 2px;
+		padding: 5px 8px;
+		text-transform: uppercase;
+	}
+	td {
+		border-bottom: 1px solid $colorDark;
+		padding: 5px 8px;
+	}
+	tr {
+		&:hover {
+			background: linear-gradient(90deg, $colorLight 0%, $colorGray 90%);
+		}
+	}
+}
+
+
+/*Genero botones con mis colores oscuros y claros recorriendo mapas*/
+/*Fonde oscuro - fuente clara*/
+@each $colorNameOsc, $colorValueOsc in $coloresOscuros{
+    @each $colorNameCla, $colorValueCla in $coloresClaros{
+        .btn-#{$colorNameOsc}-#{$colorNameCla}{
+            @extend .button;
+            background-color: $colorValueOsc;
+            color: $colorValueCla;
+        }
+    }
+}
+
+/*Fonde claro - fuente oscura*/
+@each $colorNameOsc, $colorValueOsc in $coloresOscuros{
+    @each $colorNameCla, $colorValueCla in $coloresClaros{
+        .btn-#{$colorNameCla}-#{$colorNameOsc}{
+            @extend .button;
+            background-color: $colorValueCla;
+            color: $colorValueOsc;
+        }
+    }
+}

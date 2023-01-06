@@ -1,0 +1,143 @@
+.card-title {
+	background-color: $colorDark;
+	text-align: center;
+	color: $colorLight;
+	font-size: 1rem;
+}
+.card {
+	text-align: center;
+	font-size: 0.8rem;
+}
+.contenedor {
+	display: flex;
+	justify-content: space-around;
+	flex-wrap: wrap;
+}
+.card-img-top {
+	max-height: 320px;
+}
+.contImg {
+	height: 320px;
+	display: flex;
+	align-items: center;
+}
+.me-auto {
+	margin-right: auto !important;
+}
+#cant {
+	width: 3.2rem;
+	padding: 10px;
+	margin: 1rem;
+}
+#sumaCant, #restaCant {
+	width: 3rem;
+	height: 3rem;
+	margin: 0.5rem;
+}
+
+.priority-4 {
+	display: none;
+    @include res768{
+        display: table-cell;
+    }
+}
+.priority-5 {
+	display: none;
+    @include res768{
+        display: table-cell;
+    }
+}
+#secCarro {
+	margin: auto;
+	padding: 0.5rem;
+	display: inline-block;
+	border: solid 1px $colorDark;
+	font-size: 14px;
+	p {
+		text-align: end;
+		padding: 0.5rem;
+	}
+	@include res992 {
+		font-size: 16px;
+	}
+
+}
+
+.modal-dialog {
+    @include res992{
+       max-width: 600px;
+    }
+}
+
+.modal-content {
+	text-align: center;
+}
+.oculta {
+	display: none;
+}
+#linkCarro {
+	position: absolute;
+	top: 1rem;
+	right: 100px;
+	cursor: pointer;
+    @include res768{
+        right: 2rem;
+    }
+}
+
+#linkLog {
+    @include res768{
+        position: absolute;
+        top: 1rem;
+        right: 120px;
+        cursor: pointer;
+    }
+}
+
+.form-control {
+	&:focus {
+		color: $colorStrongGray;
+		background-color: $colorLight;
+		border-color: $colorGray;
+		outline: 0;
+		box-shadow: 0 0 0 0.2rem rgba(11, 12, 14, 0.25);
+	}
+}
+.dropdown-menu {
+	button {
+		text-transform: uppercase;
+	}
+}
+#navbarSupportedContent {
+	button {
+		font-size: 0.8rem;
+	}
+}
+
+// @media screen and (min-width: 768px) {
+// 	#linkCarro {
+// 		right: 2rem;
+// 	}
+// 	#linkLog {
+// 		position: absolute;
+// 		top: 1rem;
+// 		right: 120px;
+// 		cursor: pointer;
+// 	}
+// }
+
+// @media screen and (min-width: 992px) {
+// 	.priority-5 {
+// 		display: table-cell;
+// 	}
+// 	.priority-4 {
+// 		display: table-cell;
+// 	}
+// 	.modal-dialog {
+// 		max-width: 600px;
+// 	}
+// 	#secCarro {
+// 		font-size: 16px;
+// 	}
+// }
+
