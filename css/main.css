@@ -9,11 +9,6 @@
 /*Grid*/
 /*Responsive*/
 @font-face {
-  font-family: Montserrat;
-  src: url(../fonts/Montserrat-Regular.ttf);
-  font-display: swap; }
-
-@font-face {
   font-family: MontserratBold;
   src: url(../fonts/Montserrat-Bold.ttf);
   font-display: swap; }
@@ -67,6 +62,20 @@ a:hover {
 
 .buttonBig {
   padding: 0.3rem 1rem; }
+
+.tabla th {
+  background-color: gray;
+  color: #fff;
+  letter-spacing: 2px;
+  padding: 5px 8px;
+  text-transform: uppercase; }
+
+.tabla td {
+  border-bottom: 1px solid black;
+  padding: 5px 8px; }
+
+.tabla tr:hover {
+  background: linear-gradient(90deg, #fff 0%, gray 90%); }
 
 /*Genero botones con mis colores oscuros y claros recorriendo mapas*/
 /*Fonde oscuro - fuente clara*/
@@ -238,235 +247,102 @@ a:hover {
   100% {
     transform: rotate(90deg); } }
 
-#imgPortada {
-  width: 95%;
-  margin: 1rem;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  opacity: 0.95; }
-
-.picTitle {
-  position: absolute;
-  top: 10%; }
-
-.cardPic {
-  position: relative;
-  width: 100%; }
-
-.cardPic__title {
-  font-size: 1.6rem;
+.card-title {
+  background-color: black;
+  text-align: center;
   color: #fff;
-  text-transform: uppercase;
-  font-weight: 600; }
+  font-size: 1rem; }
+
+.card {
+  text-align: center;
+  font-size: 0.8rem; }
+
+.contenedor {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap; }
+
+.card-img-top {
+  max-height: 320px; }
+
+.contImg {
+  height: 320px;
+  display: flex;
+  align-items: center; }
+
+.me-auto {
+  margin-right: auto !important; }
+
+#cant {
+  width: 3.2rem;
+  padding: 10px;
+  margin: 1rem; }
+
+#sumaCant, #restaCant {
+  width: 3rem;
+  height: 3rem;
+  margin: 0.5rem; }
+
+.priority-4 {
+  display: none; }
   @media screen and (min-width: 768px) {
-    .cardPic__title {
-      font-size: 2.5rem; } }
+    .priority-4 {
+      display: table-cell; } }
+
+.priority-5 {
+  display: none; }
+  @media screen and (min-width: 768px) {
+    .priority-5 {
+      display: table-cell; } }
+
+#secCarro {
+  margin: auto;
+  padding: 0.5rem;
+  display: inline-block;
+  border: solid 1px black;
+  font-size: 14px; }
+  #secCarro p {
+    text-align: end;
+    padding: 0.5rem; }
   @media screen and (min-width: 992px) {
-    .cardPic__title {
-      font-size: 3rem; } }
+    #secCarro {
+      font-size: 16px; } }
 
-.cardPic__cta {
-  text-transform: uppercase; }
-  .cardPic__cta a {
-    border: none;
-    box-shadow: 0 0 0 0.3rem rgba(216, 217, 219, 0.5); }
-    @media screen and (min-width: 992px) {
-      .cardPic__cta a {
-        font-size: 1rem; } }
+@media screen and (min-width: 992px) {
+  .modal-dialog {
+    max-width: 600px; } }
 
-.goAhead {
+.modal-content {
+  text-align: center; }
+
+.oculta {
+  display: none; }
+
+#linkCarro {
   position: absolute;
-  bottom: 0px;
-  z-index: 1;
-  display: block;
-  width: 100%;
-  text-align: center;
-  opacity: .5; }
-  .goAhead a {
-    line-height: 50px; }
-  .goAhead:hover {
-    opacity: 1; }
+  top: 1rem;
+  right: 100px;
+  cursor: pointer; }
+  @media screen and (min-width: 768px) {
+    #linkCarro {
+      right: 2rem; } }
 
-.arrowContainer {
-  width: 100px;
-  height: 50px;
-  margin: 0 auto;
-  position: relative; }
+@media screen and (min-width: 768px) {
+  #linkLog {
+    position: absolute;
+    top: 1rem;
+    right: 120px;
+    cursor: pointer; } }
 
-.arrow-bottom {
-  animation: arrow 2s ease-in-out infinite;
-  font-size: 20px; }
-
-.wrapper-video {
-  max-height: 600px;
-  width: 100%;
-  overflow: hidden;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: nowrap; }
-  .wrapper-video video {
-    width: 100%; }
-
-.articulo__parrafo {
-  line-height: 2rem; }
-
-.articulo_img {
-  border-radius: 10px; }
-
-#newIdx {
-  color: #fff;
-  max-width: 800px; }
-
-#email {
-  margin-right: 0.5rem; }
-
-.aboutVideo {
-  width: 100%;
-  max-height: 400px;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: nowrap; }
-  .aboutVideo video {
-    width: 100%; }
-
-.titleVideo {
-  width: 100%;
-  position: absolute;
-  text-align: center;
-  color: #fff; }
-  .titleVideo h1 {
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 4rem;
-    font-weight: 400; }
-  .titleVideo h3 {
-    font-size: 1rem;
-    text-transform: uppercase; }
-
-#filosofy {
-  background-image: url(../images/Mondony-Filosofia-Vision-y-Mission.webp);
-  background-size: 100%;
-  line-height: 2rem; }
-
-#separator {
-  border-bottom: 1px solid black; }
-
-.ocultar {
-  overflow: hidden; }
-
-#preguntasFrecuentes {
-  overflow-x: hidden; }
-
-.btn-link.focus, .btn-link:focus {
-  text-decoration: none; }
-
-.btn-link {
-  color: black; }
-  .btn-link:hover {
-    color: gray;
-    text-decoration: none; }
-
-.btn.focus, .btn:focus {
+.form-control:focus {
+  color: rgba(34, 35, 37, 0.85);
+  background-color: #fff;
+  border-color: gray;
   outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.25); }
+  box-shadow: 0 0 0 0.2rem rgba(11, 12, 14, 0.25); }
 
-.formaPago th {
-  background-color: gray;
-  color: #fff;
-  letter-spacing: 2px;
-  padding: 5px 8px;
+.dropdown-menu button {
   text-transform: uppercase; }
 
-.formaPago td {
-  border-bottom: 1px solid black;
-  padding: 5px 8px; }
-
-.formaPago tr:hover {
-  background: linear-gradient(90deg, #fff 0%, gray 90%); }
-
-.muebles img {
-  width: 100%;
-  max-width: 320px;
-  height: auto; }
-
-.muebles div {
-  animation-duration: 5s;
-  animation-name: aparecer; }
-
-#collapseMenu a {
-  text-decoration: none;
-  color: black; }
-
-#collapseMenu li {
-  padding: 0.4rem;
-  list-style-type: none; }
-  #collapseMenu li:hover {
-    background-color: #cccccc; }
-
-.galeria img:hover {
-  filter: opacity(0.8);
-  transform: scale(1.05); }
-
-.newslatter {
-  background-image: url("../images/contactoBaW.webp");
-  background-size: 100%;
-  padding-bottom: 0.3rem;
-  line-height: 20px; }
-  .newslatter form {
-    color: #fff;
-    max-width: 420px;
-    width: 90%;
-    margin: auto;
-    padding: 0.3rem; }
-    @media screen and (min-width: 768px) {
-      .newslatter form {
-        margin: 2rem; } }
-    .newslatter form div p {
-      border-radius: 10px;
-      background-color: black;
-      opacity: 0.8; }
-  .newslatter legend {
-    font-size: 1rem;
-    text-align: center;
-    font-family: "MontserratBold", "sans-serif";
-    text-transform: uppercase;
-    margin-bottom: 1rem;
-    padding: 1rem 0;
-    background-color: black;
-    box-shadow: 3px 3px 3px #cccccc;
-    border-radius: 5px; }
-  .newslatter select {
-    width: 100%;
-    margin-bottom: 1rem;
-    padding: 0.3rem;
-    border-radius: 5px; }
-  .newslatter input[type=text] {
-    width: 100%;
-    margin-bottom: 1rem;
-    padding: 0.3rem;
-    border-radius: 5px;
-    border: 2px solid #cccccc; }
-  .newslatter [type=email] {
-    width: 100%;
-    margin-bottom: 1rem;
-    padding: 0.3rem;
-    border-radius: 5px;
-    border: 2px solid #cccccc; }
-  .newslatter [type=reset]:hover {
-    transform: scale(1.1); }
-  .newslatter textarea {
-    width: 100%;
-    height: 100px;
-    border-radius: 5px;
-    border: 2px solid #cccccc; }
-  .newslatter input[type=submit]:hover {
-    transform: scale(1.1); }
-  .newslatter #optionSubscrip {
-    background-color: black;
-    opacity: 0.8; }
+#navbarSupportedContent button {
+  font-size: 0.8rem; }

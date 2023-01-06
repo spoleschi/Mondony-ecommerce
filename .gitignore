@@ -1,2 +1,5 @@
 
 .vscode/settings.json
+*.ini
+node_modules/
+old/

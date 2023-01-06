@@ -1,0 +1,28 @@
+{
+  "name": "Mondony-ecommerce",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-css": "node-sass --include-path scss scss/main.scss css/main.css",
+    "build-cssComp": "node-sass --include-path  scss --output-style compressed scss/main.scss css/mainmin.css",
+    "watch-css": "nodemon -e scss -x \"npm run build-css\"",
+    "watch-cssComp": "nodemon -e scss -x \"npm run build-cssComp\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spoleschi/Mondony-ecommerce.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/spoleschi/Mondony-ecommerce/issues"
+  },
+  "homepage": "https://github.com/spoleschi/Mondony-ecommerce#readme",
+  "devDependencies": {
+    "node-sass": "^8.0.0",
+    "nodemon": "^2.0.20"
+  }
+}

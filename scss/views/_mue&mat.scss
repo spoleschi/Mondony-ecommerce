@@ -1,0 +1,34 @@
+.muebles {
+	img {
+		width: 100%;
+		max-width: 320px;
+		height: auto;
+	}
+	div {
+		animation-duration: 5s;
+		animation-name: aparecer;
+	}
+}
+
+#collapseMenu {
+	a {
+		text-decoration: none;
+		color: $colorDark;
+	}
+	li {
+		padding: $small - 0.1rem;
+		list-style-type: none;
+		&:hover {
+			background-color: $colorLightGray;
+		}
+	}
+}
+
+.galeria {
+	img {
+		&:hover {
+			filter: opacity(0.8);
+			transform: scale(1.05);
+		}
+	}
+}

@@ -1,0 +1,33 @@
+/*Flex*/
+@mixin flex ($dir,$justify, $align, $wrap){
+    display: flex;
+    flex-direction: $dir;
+    justify-content: $justify;
+    align-items: $align;
+    flex-wrap: $wrap;
+}
+
+/*Grid*/
+@mixin grid( $columnas , $espacio){
+    display: grid;
+    grid-template-columns: 1fr ;
+    gap: 0em;    
+
+    @media screen and (min-width:768px) {
+        grid-template-columns: repeat( $columnas , 1fr );
+        gap: $espacio;
+    }
+}
+
+/*Responsive*/
+@mixin res768(){
+    @media screen and (min-width:768px){
+        @content;    
+    }
+}
+
+@mixin res992(){
+    @media screen and (min-width:992px){
+        @content;    
+    }
+}

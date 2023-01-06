@@ -1,0 +1,68 @@
+#pie {
+	font-size: $fontXSmall;
+	color: $colorLight;
+	background-color: $colorDark;
+	a {
+		color: $colorLight;
+		&:hover{
+			color:rgb(156, 214, 248);
+		}
+	}
+	h3 {
+		font-size: $fontSmall;
+	}
+	p {
+		margin-bottom: $small;
+	}
+}
+.redesSoc {
+	a{
+		padding: 0 $medium;
+		font-size: $fontSmall;
+		
+		i{
+			&:hover{
+				transform: scale(2);
+			}
+		}
+	}
+}
+
+.fa-facebook {
+	color: $colorLight;
+	&:hover{
+		border-radius: 10px; 
+		color: map-get($ColoresRedes,colorFb);
+		background-color: $colorLight;
+	}
+}
+
+.fa-instagram {
+	color: $colorLight;
+	&:hover{
+		border-radius: 10px;
+		background: map-get($ColoresRedes,colorIg);
+	}
+}
+
+.fa-whatsapp {
+	color: $colorLight;
+	&:hover{
+		border-radius: 10px;
+		background: map-get($ColoresRedes,colorWa);
+	}
+}
+
+.locDesc {
+	display: none;
+	@include res768(){
+		display: inline;
+	}
+}
+
+// @media screen and (min-width:768px) {
+// 	.locDesc {
+// 		display: inline;
+// 	}
+// }
+

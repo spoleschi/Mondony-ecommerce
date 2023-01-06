@@ -1,222 +1,549 @@
 //Defino e inicializo variables
 let totalCompras = 0;
-const arrayPedido = [];
+let arrayPedido = [];
 let articuloSelec = -1;
+let usulog;
 
 //Clases
 
 class Producto {
-    constructor(id, nombre, precio, imagen){
+    constructor(id, tipoMueble, nombre, precio, imagen){
         this.id = id;
+        this.tipoMueble = tipoMueble;
         this.nombre = nombre;
         this.precio = precio;
         this.imagen = imagen;
         this.stock = 0;
     }
-
-    //función de clase (se genera una vez por prototipo)
-    listate (){
-        return `Código de silla: ${this.id} - Modelo: ${this.nombre} - Precio: $ ${this.precio} \n`;
-    }
 }
 
 class Pedido {
-    constructor(idSilla, nombreSilla, cantidad, precio){
-        this.idSilla = idSilla;
-        this.nombreSilla = nombreSilla;
+    constructor(idProducto, nomproducto, cantidad, precio){
+        this.idProducto = idProducto;
+        this.nomproducto = nomproducto;
         this.cantidad = cantidad;
         this.precio = precio;
     }
-   
-    listate (){
-        return `Código de silla: ${this.idSilla} - Modelo: ${this.nombreSilla} - Cant.: ${this.cantidad} - Precio: $ ${this.precio} \n`;
-    }
 }
-
-//Funciones
-
-function darOpciones() {
-    if (totalCompras == 0){
-        return `1- Realizar una compra\n0- Finalizar`
-    } 
-    else{
-        return `1- Agregar producto\n2- Eliminar producto\n0- Finalizar`
-    }
-}
-
-//Alta productos
-function altaProducto() {
-    let nombre = prompt(`Ingrese el nombre del producto: `);
-    let precio = parceFloat(prompt(`Ingrese el precio del producto `));
-    let stock = parseInt(prompt(`Ingrese el stock inicial del producto `));
-
-    
-    // let arrayIds = []
-    // for (const silla of sillas){
-    //     arrayIds.push(silla.id)
-    // }
-
-    //Utilizando map
-    const arrayIds = sillas.map((el) => el.id);
-    
-    //Obtengo el id máximo en mi array de sillas
-    const idMax = arrayIds.reduce((max, el) => {if(el>max) { return el} else{ return max} }, 0);
-    
-    const silla = new Producto(idMax,nombre,precio,stock);
-    sillas.push(silla);
-    console.log(sillas);
-    alert("El producto se ha agregado correctamente");
-}
-
-//Baja productos
-function bajaProducto() {
-    mostrarProductos();
-    let id = parseInt(prompt("Ingrese el ID del producto a eliminar "));
-    let silla = sillas.find(el => el.id == id);
-    let i = sillas.indexOf(silla);
-    sillas.splice(i, 1);
-    console.log(sillas);
-    alert("El producto se ha eliminado correctamente");
-}
-
-//Mostrar productos
-
-//Función expresada - Arrow function
-const mostrarProductos = () => {
-    let productos = 'Listado de Productos:\n';
-    //Con forof
-    for (const silla of sillas){
-        //productos = productos + `\n Código de silla : ${silla.id} - Modelo : ${silla.nombre} - Precio : ${silla.precio} `;
-        productos = productos + silla.listate();
-    }
-
-    window.alert(productos);
-}
-
-//Función declarada, cual conviene usar?
-function mostrarPedido(){
-
-    let pedido = 'Pedido realizado: \n\n'
-    //con foreach
-    arrayPedido.forEach(el => pedido += el.listate());
-
-    window.alert(pedido);
- }
-
-//Funciones de valicación de entradas
-//const validaProd = (producto) => isNaN(producto) == false && producto > 0 && producto < 7;
-const validaProd = (idBus) => sillas.some(el => el.id == idBus);
-
-const validaCant = cant => isNaN(cant) == false && cant > 0;
 
 
 function buscarIdx(valBus){
     let indice = -1
     arrayPedido.forEach((el,idx) => {
-        if (el.idSilla == valBus) indice = idx;
+        if (el.idProducto == valBus) indice = idx;
     })
     return indice
 }
 
-//Genero instancias de la clase producto con los distintos modelos de silla
+// Genero instancias de la clase producto con los distintos modelos de producto
 
-const silla01 = new Producto(1,'Wishbone',34000,'./images/Sillas/wishbone.jpg');
-const silla02 = new Producto(2,'Kennedy',29000,'./images/Sillas/kennedy.jpg');
-const silla03 = new Producto(3,'Moller',23000,'./images/Sillas/moller.jpg');
-const silla04 = new Producto(4,'Ch20',25000,'./images/Sillas/Ch20Elbow.jpg');
-const silla05 = new Producto(5,'Grace',39000,'./images/Sillas/grace.jpg');
-const silla06 = new Producto(6,'Febo',24000,'./images/Sillas/febo.jpg');
+// const producto01 = new Producto(1,'Silla','Wishbone',24000,'./images/Sillas/Wishbone.jpg');
+// const producto02 = new Producto(2,'Silla','Kennedy',29000,'./images/Sillas/Kennedy.jpg');
+// const producto03 = new Producto(3,'Silla','Moller',23000,'./images/Sillas/Moller.jpg');
+// const producto04 = new Producto(4,'Silla','Ch20',25000,'./images/Sillas/Ch20Elbow.jpg');
+// const producto05 = new Producto(5,'Silla','Grace',39000,'./images/Sillas/Grace.jpg');
+// const producto06 = new Producto(6,'Silla','Febo',28000,'./images/Sillas/Febo.jpg');
 
-//Creo un array con los modelos de silla
-const sillas = [silla01, silla02,silla03, silla04,silla05, silla06]
+// Creo un array con los modelos de producto
+//const productos = [producto01, producto02,producto03, producto04,producto05, producto06]
 
-//Main
 
-const contenedor = document.getElementById("contenedor");
+//cargo productos desde json
 
-// Cargo las sillas a las cards de html
+const bbdd = "productos.json";
+const productos = [];
+
+fetch(bbdd)
+    .then((response) => response.json())
+    .then((data) => {
+        productos.push(...data);
+        cargarProductos();
+    })
+    .catch(error => console.error(error))
+
+
+// Cargo las productos a las cards de html
+
+
+//Creando el evento en el innerHTML
+// const cargarProductos2 = () => {
+//     productos.forEach(producto => {
+        
+//         contenedor.innerHTML += 
+//                         `<div class="card m-3" style="width: 18rem;">
+//                             <img src= ${producto.imagen} class="card-img-top" alt=" ${producto.nombre}">
+//                             <div class="card-body">
+//                                 <h5 class="card-title"> ${producto.nombre}</h5>
+//                                 <p class="card-text">Precio: ${producto.precio}</p>
+//                                 <button onclick="agregarProducto(${producto.id})" class="buttonBig btn-colorDark-colorLight2"  data-toggle="modal" data-target="#agregaProd">Agreagar al carrito</button>
+//                             </div>
+//                         </div>`
+//     })
+// }
+
+// function agregarProducto(id){
+//     console.log(id);
+//     articuloSelec = id;
+// }
+
+
+//Si concateno con innerHTML no funciona el botón, con appendChild si ¿?...
+// const cargarProductosMal = () => {
+//     productos.forEach(producto => {
+        
+//         contenedor.innerHTML += 
+//                         `<div class="card m-3" style="width: 18rem;">
+//                             <img src= ${producto.imagen} class="card-img-top" alt=" ${producto.nombre}">
+//                             <div class="card-body">
+//                                 <h5 class="card-title"> ${producto.nombre}</h5>
+//                                 <p class="card-text">Precio: ${producto.precio}</p>
+//                                 <a href="#" id = "boton${producto.id}" class="buttonBig btn-colorDark-colorLight2"  data-toggle="modal" data-target="#agregaProd">Agreagar al carrito</a>
+//                             </div>
+//                         </div>`
+//         const boton = document.getElementById(`boton${producto.id}`);
+//         boton.addEventListener("click", () => {
+//             console.log(producto.id);
+//             articuloSelec = producto.id;
+//         })
+
+//     })
+// }
+
 
 const cargarProductos = () => {
-    for ( let silla of sillas ){
-        contenedor.innerHTML += `
-        <div class="card m-3" style="width: 18rem;" id="resultado">
-            <img src= ${silla.imagen} class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title"> ${silla.nombre}</h5>
-                <p class="card-text">Precio: ${silla.precio}</p>
-                <a href="#" id = "button${silla.id}" class="buttonBig btn-colorDark-colorLight2"  data-toggle="modal" data-target="#agregaProd">Agreagar al carrito</a>
-            </div>
-        </div>
-        `
-        const boton = document.getElementById(`button${silla.id}`);
-        boton.addEventListener("click", () => articuloSelec = silla.id)
-    }
+    productos.forEach(producto => {
+        const card = document.createElement("div");
+        card.classList.add("contProd");
+        //card.classList.add("col-xl-3", "col-md-6", "col-xs-12");
+        card.innerHTML = 
+                        `<div class="card m-3" style="width: 20rem;">
+                            <div class = "contImg">
+                            <img src= ${producto.imagen} class="card-img-top" alt=" ${producto.nombre}">
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title"> ${producto.nombre}</h5>
+                                <p class="card-text">Precio: ${new Intl.NumberFormat('es-AR', {style: 'currency',   currency: 'ARS',}).format(producto.precio)} </p>
+                                <a href="#" id = "boton${producto.id}" class="buttonBig btn-colorDark-colorLight2"  data-toggle="modal" data-target="#agregaProd">Agreagar al carrito</a>
+                            </div>
+                        </div>`
+        contenedor.appendChild(card);
+
+        //Agregar productos al carrito: 
+
+        const boton = document.getElementById(`boton${producto.id}`);
+        boton.addEventListener("click", () => {
+            //agregarAlCarrito(producto.id)
+            console.log(producto.id);
+            articuloSelec = producto.id;
+        })
+    })
+}
+
+const limpiarCarrito = () => {
+    arrayPedido = [];
+    mostrarCarrito();
+    calcularTotal();
+
+    //localStorage: 
+    localStorage.removeItem("carrito");
 }
 
 
+//----------------------------- VARIABLES DEL DOM ------------------------------------//
 
-window.onload = function() { // can also use window.addEventListener('load', (event) => {
-    // alert('Page loaded');
+const contenedor = document.getElementById("contenedor");
+const $cant = document.getElementById("cant")
+const $sumaCant = document.getElementById("sumaCant")
+const $restaCant = document.getElementById("restaCant")
+const $agregaArt = document.getElementById("agregaArt")
+const $cantCarrito = document.getElementById("cantCarrito");
+const $carrito = document.getElementById("carrito");
+const $vaciar = document.querySelector('#vaciar');
+const $comprar = document.querySelector('#comprar');
+const $total = document.querySelector('#total');
+const $linkLog = document.getElementById("linkLog");
 
-    let opcion = Number(prompt(`Bienvenida/o al ecommerce de Mondony, muebles y diseño. \n \n Elija el nro. de opción que desea realizar \n \n` + darOpciones())); 
+const $btnSillas = document.querySelector('#btnSillas');
+const $btnBancos = document.querySelector('#btnBancos');
+const $btnSofas = document.querySelector('#btnSofas');
+const $buscador = document.getElementById("buscador");
+
+//--------------------------------------------------------------------------------------//
+
+$sumaCant.addEventListener("click",() => $cant.value = parseInt($cant.value) + 1 )
+$restaCant.addEventListener("click",() => parseInt($cant.value) > 1 ? $cant.value = parseInt($cant.value) - 1 : 1 )
+$vaciar.addEventListener('click',limpiarCarrito);
+
+$comprar.addEventListener("click", () => {
+    if (usulog == undefined){
+        Swal.fire({
+            icon: 'error',
+            iconColor: "gray",
+            title: 'Oops...',
+            timer: 2000,
+            showConfirmButton: false,
+            text: 'Debe loguearse para comprar',
+          })
+
+        setTimeout( () => {
+            $linkLog.click();
+        }, 2000)
+    }
+    else
+    {
+        Swal.fire({
+            title: "Compra realizada!",
+            text: `Gracias por elegir Mondony Muebles, Arte y Diseño.`,
+            footer: `Recibirá un correo con la información de la compra en ${usulog.email}`,
+            icon: "success",
+            iconColor: "gray",
+            confirmButtonText: "Aceptar",
+            confirmButtonColor: "black",
+            customClass:{confirmButton: 'buttonBig btn-colorLight-colorDarkv'}
+        })
+        limpiarCarrito();
+    }
+
+})
+
+$agregaArt.onclick = () => {
     
-    while(opcion !== 0){
-        if (opcion == 1){
-            mostrarProductos();
-            let idProd = Number(prompt('Ingrese el nro. de modelo de silla que quiere comprar'));
+    console.log(articuloSelec, $cant, $cant.value);
+    agregarProd();
+
+    Toastify({
+        text: "Producto agregado",
+        duration: 1000,
+        style:
+        {
+            background: "linear-gradient(to right, #000000, #cccccc)",
+        }
+    }).showToast();
     
-            let proSelec = sillas.find(el => el.id == idProd);
+    $cant.value = "1";
+};
+
+const mostrarCarrito = () => {
     
-            if (proSelec !== undefined){
+    if (arrayPedido.length === 0)
+    {
+        $carrito.innerHTML = `<p><b> El carrito se encuentra vacío </b></p>`
                 
-                let cant = Number(prompt('Ingresa la cantidad deseada'));
-                if (validaCant(cant)) {
-                    //Debería buscar si ya ingresaron esa silla e incrementar la cant...
-                    
-                    //let idx = buscarIdx(proSelec.id);
-                    let idx = arrayPedido.findIndex(el => el.idSilla === proSelec.id);
-                    
-                    if (idx > -1) {
-                        arrayPedido[idx].cantidad += cant;
-                    }
-                    else{
-                        arrayPedido.push(new Pedido(proSelec.id,proSelec.nombre,cant,proSelec.precio));
-                    }
+        //Oculto modificando valor de propiedad dysplay:
+        $vaciar.style.setProperty("display","none");
+        //$comprar.style.setProperty("display","none");
+        
+        //Lo mismo pero con notación punto:
+        //$comprar.style.display = "none";
+        
+        //Lo oculto agregando clase CSS
+        $comprar.classList.add("oculta");
 
-                    totalCompras +=  proSelec.precio * cant;    
-                    window.alert(`Agregamos al carrito ${cant} unidad/es de la silla: ${proSelec.nombre}`);
-                }
-                else window.alert('Debe ingresar la cantidad deseada en números');
-            }
-            else{
-                window.alert('Debe ingresar un código de silla válido');
-            }
-        }
-        else if(opcion == 2){
-            mostrarPedido();
-            let idPed = Number(prompt('Ingrese el código de silla que quiere eliminar'));
-            let pedSelec = arrayPedido.find(el => el.idSilla == idPed);
-            if (pedSelec !== undefined){
-                totalCompras -= pedSelec.precio * pedSelec.cantidad;
-                let indexSelec = arrayPedido.indexOf(pedSelec);
-                arrayPedido.splice(indexSelec, 1);
-
-                window.alert(`Se ha quitado el producto seleccionado del pedido`);
-            }
-            else{
-                window.alert('Debe ingresar un código de silla existente en el pedido');
-            }
-        }
-        else{
-            window.alert('Debe ingresar una opción válida');
-        }
-        opcion = Number(prompt(`Elija el nro. de opción que desea realizar \n \n` + darOpciones())); 
+        // console.log(getComputedStyle($vaciar).display);
+        // console.log($vaciar.style);
+        // console.log($vaciar.getAttribute("style"));
     }
+    else
+    {   
+        $vaciar.style.setProperty("display","inline-block");
+        $comprar.classList.remove("oculta");
 
+        $carrito.innerHTML = `<tr>
+                                <!-- <th class="priority-4">Id</th> -->
+                                <th>Desc.</th>
+                                <th>Cant.</th>
+                                <th class="priority-5">Precio</th>
+                                <th>Subtotal</th>
+                                <th>Quitar</th>
+                            </tr>`
 
-    // if (totalCompras>0){
-    if (arrayPedido.length>0){
-        mostrarPedido();
-        window.alert(`El monto total de la compra es de $ ${totalCompras}`);
+        arrayPedido.forEach((el) => {
+
+            //Desestructuración
+            const {idProducto, nomproducto, cantidad, precio} = el;
+
+            const fila = document.createElement("tr");
+
+            fila.innerHTML =`<!-- <td class="priority-4" >${idProducto}</td> -->
+                            <td>${nomproducto}</td>
+                            <td>${cantidad}</td>
+                            <td class="priority-5">${new Intl.NumberFormat().format(precio)}</td>
+                            <td>${new Intl.NumberFormat().format(precio * cantidad)}</td>`
+            // // Boton de borrar
+            const colBoton = document.createElement('td');
+            colBoton.style.textAlign = 'center';
+            const miBoton = document.createElement('button');
+            miBoton.classList.add('btn', 'btn-outline-secondary');
+            miBoton.textContent = 'X';
+            //Utilizo un data-attribute...
+            //miBoton.setAttribute("item",el.idProducto);
+            miBoton.dataset.item = idProducto;
+            miBoton.addEventListener('click', borrarItemCarrito);
+            colBoton.appendChild(miBoton);
+            fila.appendChild(colBoton);
+            $carrito.appendChild(fila);
+        })
+        calcularTotal();
     }
 }
+
+// function mostrarCarritoEnLi() {
+
+//     arrayPedido.forEach((item) => {
+
+//         const miNodo = document.createElement('li');
+//         miNodo.classList.add('list-group-item', 'text-right', 'mx-2');
+//         miNodo.textContent = `${item.cantidad} x ${item.nomproducto} - $ ${item.precio}`;
+//         // Boton de borrar
+//         const miBoton = document.createElement('button');
+//         miBoton.classList.add('btn', 'btn-danger', 'mx-5');
+//         miBoton.textContent = 'X';
+//         miBoton.style.marginLeft = '1rem';
+//         miBoton.dataset.item = item.idProducto;
+//         miBoton.addEventListener('click', borrarItemCarrito);
+//         // Mezclamos nodos
+//         miNodo.appendChild(miBoton);
+//         $carrito.appendChild(miNodo);
+//     });
+//     calcularTotal();
+//    // Renderizamos el precio total en el HTML
+//    //DOMtotal.textContent = calcularTotal();
+// }
+
+let agregarProd = () => {
+
+    let proSelec = productos.find(el => el.id == articuloSelec);
+
+    let idx = arrayPedido.findIndex(el => el.idProducto === proSelec.id);
+                    
+    if (idx > -1) {
+        arrayPedido[idx].cantidad += Number($cant.value);
+    }
+    else{
+        arrayPedido.push(new Pedido(proSelec.id,proSelec.nombre,Number($cant.value),proSelec.precio));
+    }
+
+    //totalCompras +=  proSelec.precio * Number($cant.value);    
+    console.log(`Agregamos al carrito ${$cant.value} unidad/es de la producto: ${proSelec.nombre}`);
+    console.log(arrayPedido);
+
+    localStorage.setItem("carrito", JSON.stringify(arrayPedido));
+    
+    mostrarCarrito();
+    //mostrarCarritoEnLi();
+}
+
+function borrarItemCarrito(evento) {
+    // Obtengo el producto ID que hay en el boton pulsado
+    const id = evento.target.dataset.item;
+
+    // let pedSelec = arrayPedido.find(el => el.idProducto == id);
+    // let indexSelec = arrayPedido.indexOf(pedSelec);
+    // arrayPedido.splice(indexSelec, 1);
+
+    //Lo hago más fácil con filter (ya que defino arrayPedido con let por uso de localStorage)...
+    arrayPedido = arrayPedido.filter((el) => {
+        return el.idProducto !== Number(id);
+    });
+    
+    //totalCompras -=  pedSelec.precio * pedSelec.cantidad;
+    
+    //localStorage: 
+    localStorage.setItem("carrito", JSON.stringify(arrayPedido));
+    mostrarCarrito();   
+    
+    //mostrarCarritoEnLi();
+}
+
+function calcularTotal()
+{   
+    totalCompras = 0;
+    arrayPedido.forEach(element => {
+        totalCompras += element.cantidad * element.precio;
+    });
+    $total.innerText = new Intl.NumberFormat('es-AR', {style: 'currency',   currency: 'ARS',}).format(totalCompras);
+    
+    $cantCarrito.innerText = arrayPedido.length.toString();
+}
+
+//------------------------------------ INICIO ------------------------------------------//
+
+//Cargo carrito desde Local Storage
+// if(localStorage.getItem("carrito")) {
+//     arrayPedido = JSON.parse(localStorage.getItem("carrito"));
+// }
+
+//Utilizo operador OR
+// arrayPedido = JSON.parse(localStorage.getItem("carrito")) || []
+
+//Utilizo operador NULLISH
+arrayPedido = JSON.parse(localStorage.getItem("carrito")) ?? []
+
+//Cargo carrito desde Local Storage
+usulog = JSON.parse(localStorage.getItem("usuario")) ?? undefined
+if(usulog !== undefined) {
+    $linkLog.innerText = 'Hola ' + usulog.firstName + '!';
+}
+
+//Renderizo pedido
+mostrarCarrito();
+
+
+
+//------------------------------------ FILTRO ------------------------------------------//
+
+const buscar = () =>{
+
+    contenedor.innerHTML = '';
+    
+    const texto = $buscador.value.toLowerCase();
+    for ( let producto of productos ){
+        let nombre= producto.nombre.toLowerCase() + producto.tipoMueble.toLowerCase();
+
+        if ( nombre.indexOf(texto) !== -1){
+            //cargarProductos()
+            const card = document.createElement("div");
+            card.classList.add("contProd");
+            //card.classList.add("col-xl-3", "col-md-6", "col-xs-12");
+            card.innerHTML = 
+                            `<div class="card m-3" style="width: 20rem;">
+                                <div class = "contImg">
+                                <img src= ${producto.imagen} class="card-img-top" alt=" ${producto.nombre}">
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title"> ${producto.nombre}</h5>
+                                    <p class="card-text">Precio: ${new Intl.NumberFormat('es-AR', {style: 'currency',   currency: 'ARS',}).format(producto.precio)} </p>
+                                    <a href="#" id = "boton${producto.id}" class="buttonBig btn-colorDark-colorLight2"  data-toggle="modal" data-target="#agregaProd">Agreagar al carrito</a>
+                                </div>
+                            </div>`
+            contenedor.appendChild(card);
+
+            //Agregar productos al carrito: 
+
+            const boton = document.getElementById(`boton${producto.id}`);
+            boton.addEventListener("click", () => {
+                //agregarAlCarrito(producto.id)
+                console.log(producto.id);
+                articuloSelec = producto.id;
+            })
+                
+        }
+
+    }
+    if ( contenedor.innerHTML === '' ){
+        contenedor.innerHTML = `<li>Producto no encontrado</li>`
+    }
+
+}
+
+$buscador.addEventListener('keyup', buscar);
+
+$btnSillas.addEventListener('click',() => {
+    $buscador.value = "silla";
+    buscar();
+    $buscador.value = "";
+    } 
+);
+
+$btnBancos.addEventListener('click',() => {
+    $buscador.value = "banco";
+    buscar();
+    $buscador.value = "";
+    } 
+);
+
+$btnSofas.addEventListener('click',() => {
+    $buscador.value = "sofa";
+    buscar();
+    $buscador.value = "";
+    } 
+);
+
+//------------------------------------ LOGIN -------------------------------------------//
+
+//Función asíncrona que envía una solicitud a "dummyjson.com" y devuelve el usuario buscado
+async function obtenerUsuario(usu, pass) {
+  const respuesta = await fetch('https://dummyjson.com/users')
+  const datos = await respuesta.json();
+  const user = datos.users.find(e => e.username === usu && e.password === pass);
+  return user;
+}
+
+linkLog.addEventListener("click", () => {
+    (usulog !== undefined) ? logout() : login();
+})
+
+function logout(){
+
+    Swal.fire({
+        title: 'Cerrar sesión',
+        iconColor: "gray",
+        text: "¿Desea cerrar su sesión de usuario?",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: 'black',
+        confirmButtonText: 'Logout'
+      }).then((result) => {
+        if (result.isConfirmed) {
+            usulog = undefined;
+            localStorage.removeItem("usuario");
+            $linkLog.innerHTML= '<i class="bi bi-person-fill"> LogIn</i> <span  class="badge bg-dark text-white ms-1 rounded-pill"></span>'
+            Swal.fire({
+                title: '¡Sesión cerrada!',
+                iconColor: "gray",
+                confirmButtonColor: 'black',
+                timer: 2000,
+                text: 'Ha cerrado su sesión de usuario.',
+                icon: 'success'
+            })
+        }
+      })
+}
+
+function login (){
+    Swal.fire( {
+        title: "Login",
+        html: `<input type ="text" id="usuario" class="swal2-input" style="width: 95%; margin: 1rem 0.1rem" placeholder ="Usuario">
+                <input type ="password" id="password" class="swal2-input" style="width: 95%; margin: 0.1rem" placeholder ="Password">`,
+        confirmButtonText: "Ingresar",
+        confirmButtonColor: "black",
+        showCancelButton: true, 
+        cancelButtonText: "Cancelar",
+    }).then((result) => {
+        if(result.isConfirmed) {
+            const usuario = document.getElementById("usuario").value;
+            const password = document.getElementById("password").value;
+            console.log(usuario, password);
+            
+            obtenerUsuario(document.getElementById("usuario").value,document.getElementById("password").value)
+                .then(function(resultado) {
+                    usulog = resultado;
+                }).then (()=> {if(usulog) {
+                    $linkLog.innerText = 'Hola ' + usulog.firstName + '!';
+                    localStorage.setItem("usuario", JSON.stringify(usulog));
+                    Swal.fire( {
+                        title: "Se ha logueado exitosamente",
+                        icon: "success", 
+                        timer: 2000,
+                        iconColor: "gray",
+                        confirmButtonText: "Ok",
+                        confirmButtonColor: "Black"
+                    })
+                }
+                else{
+                    Swal.fire( {
+                        iconColor: "gray",
+                        title: "Usuario inválido",
+                        icon: "error", 
+                        confirmButtonText: "Ok",
+                        confirmButtonColor: "Black"
+                        // usulog = null;
+                    })
+                }
+
+            });
+            
+        }
+    })
+}
+

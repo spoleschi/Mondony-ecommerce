@@ -1,0 +1,80 @@
+.aboutVideo{
+    width: 100%;
+	max-height: 400px;
+    position: relative;
+	overflow: hidden;
+	@include flex(row, center, center, nowrap);
+	video{
+		width: 100%;
+	}
+  }
+
+  .titleVideo{
+    width: 100%;
+    position: absolute;
+	text-align: center;
+	color: $colorLight;
+	h1{
+		font-family: 'Times New Roman', Times, serif;
+		font-size: $fontXXLarge+1rem;
+		font-weight: 400;
+	}
+	h3{
+		font-size: $fontSmall;
+		text-transform: uppercase;
+	}
+  }
+
+#filosofy{
+	background-image: url(../images/Mondony-Filosofia-Vision-y-Mission.webp);
+	background-size:100%;
+	line-height: $xLarge;
+}
+
+#separator{
+	border-bottom: 1px solid $colorDark;
+}
+
+.ocultar{
+	overflow: hidden;
+}
+
+#preguntasFrecuentes{
+	overflow-x:hidden;
+}
+
+.btn-link.focus, .btn-link:focus {
+    text-decoration: none;
+}
+
+.btn-link {
+    color: $colorDark;
+	&:hover{
+		color: $colorGray;
+		text-decoration: none;
+	}
+}
+
+.btn.focus, .btn:focus {
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.25);
+}
+
+.formaPago {
+	th {
+		background-color: $colorGray;
+		color: $colorLight;
+		letter-spacing: 2px;
+		padding: 5px 8px;
+		text-transform: uppercase;
+	}
+	td {
+		border-bottom: 1px solid $colorDark;
+		padding: 5px 8px;
+	}
+	tr {
+		&:hover {
+			background: linear-gradient(90deg, $colorLight 0%, $colorGray 90%);
+		}
+	}
+}
