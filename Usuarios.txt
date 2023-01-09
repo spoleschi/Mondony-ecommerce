@@ -1,4 +1,4 @@
-Algunos de los usuarios que devuleve la la API:
+Algunos de los usuarios que devuleve la API:
 "https://dummyjson.com/users"
 
 "username":"atuny0","password":"9uQFF1Lh"

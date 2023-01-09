@@ -182,7 +182,7 @@ $comprar.addEventListener("click", () => {
             title: 'Oops...',
             timer: 2000,
             showConfirmButton: false,
-            text: 'Debe loguearse para comprar',
+            text: 'Debe loguearse para comprar...',
           })
 
         setTimeout( () => {
