@@ -123,7 +123,7 @@ const cargarProductos = () => {
                             <div class="card-body">
                                 <h5 class="card-title"> ${producto.nombre}</h5>
                                 <p class="card-text">Precio: ${new Intl.NumberFormat('es-AR', {style: 'currency',   currency: 'ARS',}).format(producto.precio)} </p>
-                                <a href="#" id = "boton${producto.id}" class="buttonBig btn-colorDark-colorLight2"  data-toggle="modal" data-target="#agregaProd">Agreagar al carrito</a>
+                                <a href="#" id = "boton${producto.id}" class="buttonBig btn-colorDark-colorLight2"  data-toggle="modal" data-target="#agregaProd">Agregar al carrito</a>
                             </div>
                         </div>`
         contenedor.appendChild(card);
